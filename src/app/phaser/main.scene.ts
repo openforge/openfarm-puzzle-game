@@ -13,15 +13,15 @@ export class MainScene extends Phaser.Scene {
   ];
 
   tileTypes = [
-    /*'bear',
+    'bear',
     'buffalo',
     'chick',
     'chicken',
-    'cow',*/
+    'cow',
     'crocodile',
     'dog',
     'duck',
-    'elephant'/*,
+    'elephant',
     'frog',
     'giraffe',
     'goat',
@@ -42,8 +42,10 @@ export class MainScene extends Phaser.Scene {
     'snake',
     'walrus',
     'whale',
-    'zebra'*/
+    'zebra'
   ];
+
+  currentActiveTileTypes = 4;
 
   score = 0;
 
@@ -78,7 +80,7 @@ export class MainScene extends Phaser.Scene {
 
     const seed = Date.now().toString();
     this.random = new Phaser.Math.RandomDataGenerator([seed]);
-
+    this.shuffleTileTypes();
     this.initTiles();
   }
 
@@ -107,6 +109,17 @@ export class MainScene extends Phaser.Scene {
     }
   }
 
+  shuffleTileTypes() {
+      let j;
+      let x;
+      for (let i = this.tileTypes.length - 1; i > 0; i--) {
+          j = Math.floor(Math.random() * (i + 1));
+          x = this.tileTypes[i];
+          this.tileTypes[i] = this.tileTypes[j];
+          this.tileTypes[j] = x;
+      }
+  }
+
   private initTiles() {
       for (let i = 0; i < this.tileGrid.length; i++){
           for (let j = 0; j < this.tileGrid.length; j++){
@@ -119,7 +132,7 @@ export class MainScene extends Phaser.Scene {
 
   private addTile(x, y) {
 
-      const tileToAdd = this.tileTypes[this.random.integerInRange(0, this.tileTypes.length - 1)];
+      const tileToAdd = this.tileTypes[this.random.integerInRange(0, this.currentActiveTileTypes - 1)];
       const tile = this.tiles.create((x * this.tileWidth) + this.tileWidth / 2, 0, 'animals', tileToAdd);
       tile.scale = 0.5;
 
