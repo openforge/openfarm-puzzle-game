@@ -139,9 +139,9 @@ export class MainScene extends Phaser.Scene {
 
   private addTile(x: number, y: number) {
 
-      const tileToAdd = this.tileTypes[this.random.integerInRange(0, this.gameInstanceService.currentActiveTileTypes - 1)];
-      const tile = this.tiles.create((x * this.tileWidth) + this.tileWidth / 2, 0, 'animals', tileToAdd);
-      tile.scale = (this.tileWidth - 10) / this.assetTileSize;
+    const tileToAdd = this.tileTypes[this.random.integerInRange(0, this.gameInstanceService.currentActiveTileTypes - 1)];
+    const tile = this.tiles.create((x * this.tileWidth) + this.tileWidth / 2, 0, 'animals', tileToAdd);
+    tile.scale = (this.tileWidth - 10) / this.assetTileSize;
 
     this.add.tween({
       targets: tile,
@@ -336,7 +336,7 @@ export class MainScene extends Phaser.Scene {
   incrementScore() {
     this.gameInstanceService.score += 10;
     if (this.gameInstanceService.score > 0 && this.gameInstanceService.score % this.gameInstanceService.levelChangeScore === 0) {
-      this.gameInstanceService.level ++;
+      this.gameInstanceService.level++;
       if (this.gameInstanceService.currentActiveTileTypes < this.tileTypes.length) {
         this.gameInstanceService.currentActiveTileTypes++;
       }
@@ -360,6 +360,7 @@ export class MainScene extends Phaser.Scene {
   }
 
   resetTile() {
+    // tslint:disable-next-line: prefer-for-of
     for (let i = 0; i < this.tileGrid.length; i++) {
       for (let j = this.tileGrid[i].length - 1; j > 0; j--) {
         if (this.tileGrid[i][j] == null && this.tileGrid[i][j - 1] != null) {
