@@ -1,7 +1,7 @@
 import * as Phaser from 'phaser';
 import { GameInstanceService } from '../services/game-instance.service';
 import { VibrationService } from '../services/vibration.service';
-import { skip } from 'rxjs/operators';
+import { skip, debounceTime } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
 export class MainScene extends Phaser.Scene {
@@ -95,8 +95,8 @@ export class MainScene extends Phaser.Scene {
     this.initTiles();
 
     const powerUpEmitter$ = (this.gameInstanceService as any).powerUpEmitter$ as Observable<void>;
-    powerUpEmitter$.pipe(skip(1)).subscribe(() => {
-      console.log('I can listen to events!');
+    powerUpEmitter$.pipe(skip(1), debounceTime(500)).subscribe(() => {
+      (this.gameInstanceService as any).decreasePowerup();
       this.clearTiles();
     });
   }

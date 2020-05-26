@@ -28,10 +28,12 @@ export class GameInstanceService {
       const absZ = Math.abs(z);
       if ((this.bombPowerUps > 0) && (absX > threshhold || absY > threshhold || absZ > threshhold)) {
         this.powerUpEmitter$.next();
-        this.bombPowerUps--;
-        console.log('remaining powerups: ', this.bombPowerUps);
       }
     });
+  }
+
+  decreasePowerup() {
+    this.bombPowerUps--;
   }
 
   init() {
