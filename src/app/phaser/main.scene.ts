@@ -238,6 +238,10 @@ export class MainScene extends Phaser.Scene {
     }
   }
 
+  public clearTiles() {
+    this.removeTileGroup(this.tileGrid);
+  }
+
   tileUp() {
     this.activeTile1 = null;
     this.activeTile2 = null;
