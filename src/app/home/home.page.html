@@ -1,20 +1,18 @@
-<ion-header [translucent]="true">
+<div id="game-main">
+  <!-- this is the root that the phaser scene is injected into for the dom overlay to work -->
+</div>
+
+<ion-header>
   <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
+      <section class="score-section">
+          <p>Score: {{gameInstanceService.score}}</p>
+          <p>Level {{gameInstanceService.level}}</p>
+      </section>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
-</ion-content>
+<ion-fab vertical="bottom" horizontal="center" slot="fixed">
+  <ion-fab-button color="dark" (click)="gameInstanceService.restart()">
+    <ion-icon name="reload-outline"></ion-icon>
+  </ion-fab-button>
+</ion-fab>
