@@ -1,3 +1,18 @@
 <div id="game-main">
   <!-- this is the root that the phaser scene is injected into for the dom overlay to work -->
 </div>
+
+<ion-header>
+  <ion-toolbar>
+      <section class="score-section">
+          <p>Score: {{gameInstanceService.score}}</p>
+          <p>Level {{gameInstanceService.level}}</p>
+      </section>
+  </ion-toolbar>
+</ion-header>
+
+<ion-fab vertical="bottom" horizontal="center" slot="fixed">
+  <ion-fab-button color="dark" (click)="gameInstanceService.restart()">
+    <ion-icon name="reload-outline"></ion-icon>
+  </ion-fab-button>
+</ion-fab>

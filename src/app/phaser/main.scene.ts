@@ -1,4 +1,5 @@
 import * as Phaser from 'phaser';
+import { GameInstanceService } from '../services/game-instance.service';
 
 export class MainScene extends Phaser.Scene {
   static KEY = 'main-scene';
@@ -47,8 +48,6 @@ export class MainScene extends Phaser.Scene {
 
   currentActiveTileTypes = 4;
 
-  score = 0;
-
   activeTile1: Phaser.GameObjects.Sprite = null;
   activeTile2: Phaser.GameObjects.Sprite = null;
 
@@ -57,11 +56,15 @@ export class MainScene extends Phaser.Scene {
 
   canMove = false;
 
-  tileWidth = 136 / 2 + 10;
-  tileHeight = 136 / 2 + 10;
+  assetTileSize = 136;
+  tileWidth: number;
+  tileHeight: number;
+  yOffset: number;
 
   tiles: Phaser.GameObjects.Group;
   random: Phaser.Math.RandomDataGenerator;
+
+  gameInstanceService: GameInstanceService;
 
   constructor() {
     super({ key: MainScene.KEY });
@@ -72,9 +75,13 @@ export class MainScene extends Phaser.Scene {
   }
 
   create() {
+    this.gameInstanceService = (this.scene.scene.game as any).gameInstanceService;
     this.cameras.main.setBackgroundColor('#34495f');
-    // const dog = this.add.image(0, 0, 'animals', 'dog');
-    // dog.scale = 0.5;
+
+    this.tileWidth = this.game.scale.gameSize.width / 6;
+    this.tileHeight = this.game.scale.gameSize.width / 6;
+
+    this.yOffset = this.game.scale.gameSize.height / 4;
 
     this.tiles = this.add.group();
 
@@ -90,7 +97,7 @@ export class MainScene extends Phaser.Scene {
         const hoverY = this.game.input.activePointer.y;
 
         const hoverPosX = Math.floor(hoverX / this.tileWidth);
-        const hoverPosY = Math.floor(hoverY / this.tileHeight);
+        const hoverPosY = Math.floor((hoverY  - this.yOffset) / this.tileHeight);
 
         const difX = (hoverPosX - this.startPosX);
         const difY = (hoverPosY - this.startPosY);
@@ -130,18 +137,18 @@ export class MainScene extends Phaser.Scene {
       this.time.addEvent({ delay: 500, callback: () => this.checkMatch()});
   }
 
-  private addTile(x, y) {
+  private addTile(x: number, y: number) {
 
       const tileToAdd = this.tileTypes[this.random.integerInRange(0, this.currentActiveTileTypes - 1)];
       const tile = this.tiles.create((x * this.tileWidth) + this.tileWidth / 2, 0, 'animals', tileToAdd);
-      tile.scale = 0.5;
+      tile.scale = (this.tileWidth - 10) / this.assetTileSize;
 
       this.add.tween({
         targets: tile,
         duration: 500,
         y: {
           from: tile.y,
-          to: y * this.tileHeight + (this.tileHeight / 2),
+          to: y * this.tileHeight + (this.tileHeight / 2) + (this.yOffset),
         }
       });
 
@@ -154,24 +161,24 @@ export class MainScene extends Phaser.Scene {
 
   }
 
-  private tileDown(tile) {
+  private tileDown(tile: Phaser.GameObjects.Sprite) {
       if (this.canMove) {
           this.activeTile1 = tile;
           this.startPosX = (tile.x - this.tileWidth / 2) / this.tileWidth;
-          this.startPosY = (tile.y - this.tileHeight / 2) / this.tileHeight;
+          this.startPosY = (tile.y - this.tileHeight / 2 - (this.yOffset)) / this.tileHeight;
       }
   }
 
   private swapTiles() {
-    if (this.activeTile1 && this.activeTile2){
+    if (this.activeTile1 && this.activeTile2) {
         const tile1Pos = {
           x: (this.activeTile1.x - this.tileWidth / 2) / this.tileWidth,
-          y: (this.activeTile1.y - this.tileHeight / 2) / this.tileHeight
+          y: (this.activeTile1.y - this.tileHeight / 2  - (this.yOffset)) / this.tileHeight
         };
 
         const tile2Pos = {
           x: (this.activeTile2.x - this.tileWidth / 2) / this.tileWidth,
-          y: (this.activeTile2.y - this.tileHeight / 2) / this.tileHeight
+          y: (this.activeTile2.y - this.tileHeight / 2  - (this.yOffset)) / this.tileHeight
         };
 
         this.tileGrid[tile1Pos.x][tile1Pos.y] = this.activeTile2;
@@ -186,7 +193,7 @@ export class MainScene extends Phaser.Scene {
           },
           y: {
             from: this.activeTile1.y,
-            to: tile2Pos.y * this.tileHeight + (this.tileHeight / 2),
+            to: tile2Pos.y * this.tileHeight + (this.tileHeight / 2) + (this.yOffset),
           }
         });
 
@@ -199,7 +206,7 @@ export class MainScene extends Phaser.Scene {
           },
           y: {
             from: this.activeTile2.y,
-            to: tile1Pos.y * this.tileHeight + (this.tileHeight / 2),
+            to: tile1Pos.y * this.tileHeight + (this.tileHeight / 2) + (this.yOffset),
           }
         });
         this.activeTile1 = this.tileGrid[tile1Pos.x][tile1Pos.y];
@@ -208,7 +215,7 @@ export class MainScene extends Phaser.Scene {
   }
 
   checkMatch(){
-      const matches = this.getMatches(this.tileGrid);
+      const matches = this.getMatches();
       if (matches.length > 0) {
           this.removeTileGroup(matches);
           this.resetTile();
@@ -231,36 +238,36 @@ export class MainScene extends Phaser.Scene {
     this.activeTile2 = null;
   }
 
-  getMatches(tileGrid) {
+  getMatches() {
 
     const matches = [];
     let groups = [];
 
     // Check for horizontal matches
     let i = 0;
-    for (const tempArr of tileGrid) {
+    for (const tempArr of this.tileGrid) {
         groups = [];
         for (let j = 0; j < tempArr.length; j++)
         {
             if (j < tempArr.length - 2) {
-              if (tileGrid[i][j] && tileGrid[i][j + 1] && tileGrid[i][j + 2]) {
-                  if (tileGrid[i][j].tileType === tileGrid[i][j + 1].tileType &&
-                    tileGrid[i][j + 1].tileType === tileGrid[i][j + 2].tileType) {
+              if (this.tileGrid[i][j] && this.tileGrid[i][j + 1] && this.tileGrid[i][j + 2]) {
+                  if (this.tileGrid[i][j].tileType === this.tileGrid[i][j + 1].tileType &&
+                    this.tileGrid[i][j + 1].tileType === this.tileGrid[i][j + 2].tileType) {
                       if (groups.length > 0) {
-                          if (groups.indexOf(tileGrid[i][j]) === -1) {
+                          if (groups.indexOf(this.tileGrid[i][j]) === -1) {
                               matches.push(groups);
                               groups = [];
                           }
                       }
 
-                      if (groups.indexOf(tileGrid[i][j]) === -1) {
-                          groups.push(tileGrid[i][j]);
+                      if (groups.indexOf(this.tileGrid[i][j]) === -1) {
+                          groups.push(this.tileGrid[i][j]);
                       }
-                      if (groups.indexOf(tileGrid[i][j + 1]) === -1) {
-                          groups.push(tileGrid[i][j + 1]);
+                      if (groups.indexOf(this.tileGrid[i][j + 1]) === -1) {
+                          groups.push(this.tileGrid[i][j + 1]);
                       }
-                      if (groups.indexOf(tileGrid[i][j + 2]) === -1) {
-                          groups.push(tileGrid[i][j + 2]);
+                      if (groups.indexOf(this.tileGrid[i][j + 2]) === -1) {
+                          groups.push(this.tileGrid[i][j + 2]);
                       }
                   }
               }
@@ -274,28 +281,28 @@ export class MainScene extends Phaser.Scene {
 
     // Check for vertical matches
     let j = 0;
-    for (const tempArr of tileGrid) {
+    for (const tempArr of this.tileGrid) {
         groups = [];
         for (i = 0; i < tempArr.length; i++)  {
             if (i < tempArr.length - 2) {
-                if (tileGrid[i][j] && tileGrid[i + 1][j] && tileGrid[i + 2][j]) {
-                    if (tileGrid[i][j].tileType === tileGrid[i + 1][j].tileType &&
-                      tileGrid[i + 1][j].tileType === tileGrid[i + 2][j].tileType) {
+                if (this.tileGrid[i][j] && this.tileGrid[i + 1][j] && this.tileGrid[i + 2][j]) {
+                    if (this.tileGrid[i][j].tileType === this.tileGrid[i + 1][j].tileType &&
+                      this.tileGrid[i + 1][j].tileType === this.tileGrid[i + 2][j].tileType) {
                         if (groups.length > 0) {
-                            if (groups.indexOf(tileGrid[i][j]) === -1) {
+                            if (groups.indexOf(this.tileGrid[i][j]) === -1) {
                                 matches.push(groups);
                                 groups = [];
                             }
                         }
 
-                        if (groups.indexOf(tileGrid[i][j]) === -1) {
-                            groups.push(tileGrid[i][j]);
+                        if (groups.indexOf(this.tileGrid[i][j]) === -1) {
+                            groups.push(this.tileGrid[i][j]);
                         }
-                        if (groups.indexOf(tileGrid[i + 1][j]) === -1) {
-                            groups.push(tileGrid[i + 1][j]);
+                        if (groups.indexOf(this.tileGrid[i + 1][j]) === -1) {
+                            groups.push(this.tileGrid[i + 1][j]);
                         }
-                        if (groups.indexOf(tileGrid[i + 2][j]) === -1) {
-                            groups.push(tileGrid[i + 2][j]);
+                        if (groups.indexOf(this.tileGrid[i + 2][j]) === -1) {
+                            groups.push(this.tileGrid[i + 2][j]);
                         }
                     }
                 }
@@ -309,15 +316,26 @@ export class MainScene extends Phaser.Scene {
     return matches;
   }
 
-  removeTileGroup(matches){
+  removeTileGroup(matches) {
     for (const tempArr of matches){
         for (const tile of tempArr){
             const tilePos = this.getTilePos(this.tileGrid, tile);
             this.tiles.remove(tile, true);
+            this.incrementScore();
             if (tilePos.x !== -1 && tilePos.y !== -1){
                 this.tileGrid[tilePos.x][tilePos.y] = null;
             }
         }
+    }
+  }
+
+  incrementScore() {
+    this.gameInstanceService.score += 10;
+    if (this.gameInstanceService.score > 0 && this.gameInstanceService.score % this.gameInstanceService.levelChangeScore === 0) {
+      this.gameInstanceService.level ++;
+      if (this.currentActiveTileTypes < this.tileTypes.length) {
+        this.currentActiveTileTypes++;
+      }
     }
   }
 
@@ -350,7 +368,7 @@ export class MainScene extends Phaser.Scene {
                   duration: 200,
                   y: {
                     from: tempTile.y,
-                    to: (this.tileHeight * j) + (this.tileHeight / 2),
+                    to: (this.tileHeight * j) + (this.tileHeight / 2) + (this.yOffset),
                   }
                 });
 

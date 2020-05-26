@@ -6,11 +6,9 @@ import { MainScene } from '../phaser/main.scene';
 export class GameInstanceService {
 
   public gameInstance: any;
-
-  image: Phaser.GameObjects.Image;
-  key;
-
-  currentScene;
+  score = 0;
+  level = 1;
+  levelChangeScore = 1000;
 
   constructor() {
   }
@@ -34,7 +32,15 @@ export class GameInstanceService {
           forceSetTimeOut: true
         }
       });
+      this.gameInstance.gameInstanceService = this;
     }
+  }
+
+  restart() {
+    this.score = 0;
+    this.level = 1;
+    const game = this.gameInstance as Phaser.Game;
+    game.scene.getScene(MainScene.KEY).scene.restart();
   }
 
 }

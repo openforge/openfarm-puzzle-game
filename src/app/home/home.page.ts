@@ -8,7 +8,7 @@ import { GameInstanceService } from '../services/game-instance.service';
 })
 export class HomePage {
 
-  constructor(private gameInstanceService: GameInstanceService) {
+  constructor(public gameInstanceService: GameInstanceService) {
     this.gameInstanceService.init();
   }
 
