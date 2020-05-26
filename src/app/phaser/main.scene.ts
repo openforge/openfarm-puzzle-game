@@ -46,8 +46,6 @@ export class MainScene extends Phaser.Scene {
     'zebra'
   ];
 
-  currentActiveTileTypes = 4;
-
   activeTile1: Phaser.GameObjects.Sprite = null;
   activeTile2: Phaser.GameObjects.Sprite = null;
 
@@ -139,7 +137,7 @@ export class MainScene extends Phaser.Scene {
 
   private addTile(x: number, y: number) {
 
-      const tileToAdd = this.tileTypes[this.random.integerInRange(0, this.currentActiveTileTypes - 1)];
+      const tileToAdd = this.tileTypes[this.random.integerInRange(0, this.gameInstanceService.currentActiveTileTypes - 1)];
       const tile = this.tiles.create((x * this.tileWidth) + this.tileWidth / 2, 0, 'animals', tileToAdd);
       tile.scale = (this.tileWidth - 10) / this.assetTileSize;
 
@@ -333,8 +331,8 @@ export class MainScene extends Phaser.Scene {
     this.gameInstanceService.score += 10;
     if (this.gameInstanceService.score > 0 && this.gameInstanceService.score % this.gameInstanceService.levelChangeScore === 0) {
       this.gameInstanceService.level ++;
-      if (this.currentActiveTileTypes < this.tileTypes.length) {
-        this.currentActiveTileTypes++;
+      if (this.gameInstanceService.currentActiveTileTypes < this.tileTypes.length) {
+        this.gameInstanceService.currentActiveTileTypes++;
       }
     }
   }

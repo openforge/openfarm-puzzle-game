@@ -9,6 +9,7 @@ export class GameInstanceService {
   score = 0;
   level = 1;
   levelChangeScore = 1000;
+  currentActiveTileTypes = 4;
 
   constructor() {
   }
@@ -39,6 +40,7 @@ export class GameInstanceService {
   restart() {
     this.score = 0;
     this.level = 1;
+    this.currentActiveTileTypes = 4;
     const game = this.gameInstance as Phaser.Game;
     game.scene.getScene(MainScene.KEY).scene.restart();
   }
