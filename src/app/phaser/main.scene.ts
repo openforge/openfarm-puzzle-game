@@ -1,7 +1,7 @@
 import * as Phaser from 'phaser';
 import { GameInstanceService } from '../services/game-instance.service';
 import { VibrationService } from '../services/vibration.service';
-import { HapticsImpactStyle } from '@capacitor/core';
+import { skip } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
 export class MainScene extends Phaser.Scene {
@@ -57,6 +57,8 @@ export class MainScene extends Phaser.Scene {
 
   canMove = false;
 
+  bombs: Phaser.GameObjects.Image[] = [];
+
   assetTileSize = 136;
   tileWidth: number;
   tileHeight: number;
@@ -73,6 +75,7 @@ export class MainScene extends Phaser.Scene {
 
   preload() {
     this.load.atlas('animals', 'assets/animals.png', 'assets/animals_atlas.json');
+    this.load.image('bomb', 'assets/bomb.png');
   }
 
   create() {
@@ -90,8 +93,9 @@ export class MainScene extends Phaser.Scene {
     this.random = new Phaser.Math.RandomDataGenerator([seed]);
     this.shuffleTileTypes();
     this.initTiles();
+
     const powerUpEmitter$ = (this.gameInstanceService as any).powerUpEmitter$ as Observable<void>;
-    powerUpEmitter$.subscribe(() => {
+    powerUpEmitter$.pipe(skip(1)).subscribe(() => {
       console.log('I can listen to events!');
       this.clearTiles();
     });
@@ -119,6 +123,19 @@ export class MainScene extends Phaser.Scene {
 
       }
 
+    }
+    this.getPowerups();
+  }
+
+  getPowerups() {
+    this.bombs.forEach(bomb => bomb.destroy());
+    const bombs = (this.gameInstanceService as any).bombPowerUps;
+    console.log('bombs: ', bombs);
+    const x = 50;
+    const y = 100;
+    for (let i = 0; i < bombs; i++) {
+      const bomb = this.add.image(x * (i + 1), y, 'bomb').setScale(.1);
+      this.bombs.push(bomb);
     }
   }
 

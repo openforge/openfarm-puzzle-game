@@ -21,14 +21,15 @@ export class GameInstanceService {
   constructor(
     private vibrationSvc: VibrationService
   ) {
-    Motion.addListener('accel', ({acceleration: {x, y, z}}) => {
-      const threshhold = 25;
+    Motion.addListener('accel', ({ acceleration: { x, y, z } }) => {
+      const threshhold = 20;
       const absX = Math.abs(x);
       const absY = Math.abs(y);
       const absZ = Math.abs(z);
-      if (this.bombPowerUps && absX > threshhold || absY > threshhold || absZ > threshhold) {
+      if ((this.bombPowerUps > 0) && (absX > threshhold || absY > threshhold || absZ > threshhold)) {
         this.powerUpEmitter$.next();
         this.bombPowerUps--;
+        console.log('remaining powerups: ', this.bombPowerUps);
       }
     });
   }
