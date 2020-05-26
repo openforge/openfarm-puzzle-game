@@ -2,6 +2,7 @@ import * as Phaser from 'phaser';
 import { GameInstanceService } from '../services/game-instance.service';
 import { VibrationService } from '../services/vibration.service';
 import { HapticsImpactStyle } from '@capacitor/core';
+import { Observable } from 'rxjs';
 
 export class MainScene extends Phaser.Scene {
   static KEY = 'main-scene';
@@ -89,6 +90,11 @@ export class MainScene extends Phaser.Scene {
     this.random = new Phaser.Math.RandomDataGenerator([seed]);
     this.shuffleTileTypes();
     this.initTiles();
+    const powerUpEmitter$ = (this.gameInstanceService as any).powerUpEmitter$ as Observable<void>;
+    powerUpEmitter$.subscribe(() => {
+      console.log('I can listen to events!');
+      this.clearTiles();
+    });
   }
 
   update() {
@@ -238,8 +244,11 @@ export class MainScene extends Phaser.Scene {
     }
   }
 
-  public clearTiles() {
+  clearTiles() {
+    const vibrationSvc = (this.gameInstanceService as any).vibrationSvc as VibrationService;
+    vibrationSvc.vibrate();
     this.removeTileGroup(this.tileGrid);
+    this.fillTile();
   }
 
   tileUp() {
@@ -325,6 +334,7 @@ export class MainScene extends Phaser.Scene {
   }
 
   removeTileGroup(matches) {
+    console.log('matches: ', matches);
     for (const tempArr of matches) {
       for (const tile of tempArr) {
         const tilePos = this.getTilePos(this.tileGrid, tile);
