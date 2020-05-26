@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import * as Phaser from 'phaser';
 import { MainScene } from '../phaser/main.scene';
+import { VibrationService } from './vibration.service';
 
 @Injectable({ providedIn: 'root' })
 export class GameInstanceService {
@@ -11,8 +12,9 @@ export class GameInstanceService {
   levelChangeScore = 1000;
   currentActiveTileTypes = 4;
 
-  constructor() {
-  }
+  constructor(
+    private vibrationSvc: VibrationService
+  ) {}
 
   init() {
     if (!this.gameInstance) {
@@ -34,6 +36,7 @@ export class GameInstanceService {
         }
       });
       this.gameInstance.gameInstanceService = this;
+      this.gameInstance.vibrationSvc = this.vibrationSvc;
     }
   }
 
