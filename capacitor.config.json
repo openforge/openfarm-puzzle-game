@@ -1,5 +1,5 @@
 {
-  "appId": "io.ionic.starter",
+  "appId": "io.openforge.phaserexample",
   "appName": "ionic-phaser-example",
   "bundledWebRuntime": false,
   "npmClient": "npm",
