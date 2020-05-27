@@ -1,7 +1,8 @@
 import * as Phaser from 'phaser';
 import { GameInstanceService } from '../services/game-instance.service';
 import { VibrationService } from '../services/vibration.service';
-import { HapticsImpactStyle } from '@capacitor/core';
+import { skip, debounceTime } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 export class MainScene extends Phaser.Scene {
   static KEY = 'main-scene';
@@ -56,6 +57,8 @@ export class MainScene extends Phaser.Scene {
 
   canMove = false;
 
+  bombs: Phaser.GameObjects.Image[] = [];
+
   assetTileSize = 136;
   tileWidth: number;
   tileHeight: number;
@@ -72,6 +75,7 @@ export class MainScene extends Phaser.Scene {
 
   preload() {
     this.load.atlas('animals', 'assets/animals.png', 'assets/animals_atlas.json');
+    this.load.image('bomb', 'assets/bomb.png');
   }
 
   create() {
@@ -89,6 +93,12 @@ export class MainScene extends Phaser.Scene {
     this.random = new Phaser.Math.RandomDataGenerator([seed]);
     this.shuffleTileTypes();
     this.initTiles();
+
+    const powerUpEmitter$ = (this.gameInstanceService as any).powerUpEmitter$ as Observable<void>;
+    powerUpEmitter$.pipe(skip(1), debounceTime(500)).subscribe(() => {
+      (this.gameInstanceService as any).decreasePowerup();
+      this.clearTiles();
+    });
   }
 
   update() {
@@ -113,6 +123,19 @@ export class MainScene extends Phaser.Scene {
 
       }
 
+    }
+    this.getPowerups();
+  }
+
+  getPowerups() {
+    this.bombs.forEach(bomb => bomb.destroy());
+    const bombs = (this.gameInstanceService as any).bombPowerUps;
+    console.log('bombs: ', bombs);
+    const x = 50;
+    const y = 100;
+    for (let i = 0; i < bombs; i++) {
+      const bomb = this.add.image(x * (i + 1), y, 'bomb').setScale(.1);
+      this.bombs.push(bomb);
     }
   }
 
@@ -139,9 +162,9 @@ export class MainScene extends Phaser.Scene {
 
   private addTile(x: number, y: number) {
 
-      const tileToAdd = this.tileTypes[this.random.integerInRange(0, this.gameInstanceService.currentActiveTileTypes - 1)];
-      const tile = this.tiles.create((x * this.tileWidth) + this.tileWidth / 2, 0, 'animals', tileToAdd);
-      tile.scale = (this.tileWidth - 10) / this.assetTileSize;
+    const tileToAdd = this.tileTypes[this.random.integerInRange(0, this.gameInstanceService.currentActiveTileTypes - 1)];
+    const tile = this.tiles.create((x * this.tileWidth) + this.tileWidth / 2, 0, 'animals', tileToAdd);
+    tile.scale = (this.tileWidth - 10) / this.assetTileSize;
 
     this.add.tween({
       targets: tile,
@@ -238,6 +261,13 @@ export class MainScene extends Phaser.Scene {
     }
   }
 
+  clearTiles() {
+    const vibrationSvc = (this.gameInstanceService as any).vibrationSvc as VibrationService;
+    vibrationSvc.vibrate();
+    this.removeTileGroup(this.tileGrid);
+    this.fillTile();
+  }
+
   tileUp() {
     this.activeTile1 = null;
     this.activeTile2 = null;
@@ -321,6 +351,7 @@ export class MainScene extends Phaser.Scene {
   }
 
   removeTileGroup(matches) {
+    console.log('matches: ', matches);
     for (const tempArr of matches) {
       for (const tile of tempArr) {
         const tilePos = this.getTilePos(this.tileGrid, tile);
@@ -336,7 +367,7 @@ export class MainScene extends Phaser.Scene {
   incrementScore() {
     this.gameInstanceService.score += 10;
     if (this.gameInstanceService.score > 0 && this.gameInstanceService.score % this.gameInstanceService.levelChangeScore === 0) {
-      this.gameInstanceService.level ++;
+      this.gameInstanceService.level++;
       if (this.gameInstanceService.currentActiveTileTypes < this.tileTypes.length) {
         this.gameInstanceService.currentActiveTileTypes++;
       }
@@ -360,6 +391,7 @@ export class MainScene extends Phaser.Scene {
   }
 
   resetTile() {
+    // tslint:disable-next-line: prefer-for-of
     for (let i = 0; i < this.tileGrid.length; i++) {
       for (let j = this.tileGrid[i].length - 1; j > 0; j--) {
         if (this.tileGrid[i][j] == null && this.tileGrid[i][j - 1] != null) {
