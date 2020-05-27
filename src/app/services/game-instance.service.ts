@@ -2,6 +2,10 @@ import { Injectable } from '@angular/core';
 import * as Phaser from 'phaser';
 import { MainScene } from '../phaser/main.scene';
 import { VibrationService } from './vibration.service';
+import { Plugins } from '@capacitor/core';
+import { BehaviorSubject } from 'rxjs';
+
+const { Motion } = Plugins;
 
 @Injectable({ providedIn: 'root' })
 export class GameInstanceService {
@@ -11,10 +15,26 @@ export class GameInstanceService {
   level = 1;
   levelChangeScore = 1000;
   currentActiveTileTypes = 4;
+  bombPowerUps = 3;
+  powerUpEmitter$: BehaviorSubject<void> = new BehaviorSubject(null);
 
   constructor(
     private vibrationSvc: VibrationService
-  ) {}
+  ) {
+    Motion.addListener('accel', ({ acceleration: { x, y, z } }) => {
+      const threshhold = 20;
+      const absX = Math.abs(x);
+      const absY = Math.abs(y);
+      const absZ = Math.abs(z);
+      if ((this.bombPowerUps > 0) && (absX > threshhold || absY > threshhold || absZ > threshhold)) {
+        this.powerUpEmitter$.next();
+      }
+    });
+  }
+
+  decreasePowerup() {
+    this.bombPowerUps--;
+  }
 
   init() {
     if (!this.gameInstance) {
