@@ -3,6 +3,7 @@ import { GameInstanceService } from '../services/game-instance.service';
 import { VibrationService } from '../services/vibration.service';
 import { skip, debounceTime } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { Capacitor } from '@capacitor/core';
 
 export class MainScene extends Phaser.Scene {
   static KEY = 'main-scene';
@@ -63,11 +64,13 @@ export class MainScene extends Phaser.Scene {
   tileWidth: number;
   tileHeight: number;
   yOffset: number;
+  assetScale: number;
 
   tiles: Phaser.GameObjects.Group;
   random: Phaser.Math.RandomDataGenerator;
 
   gameInstanceService: GameInstanceService;
+  matchParticles: Phaser.GameObjects.Particles.ParticleEmitterManager;
 
   constructor() {
     super({ key: MainScene.KEY });
@@ -76,6 +79,7 @@ export class MainScene extends Phaser.Scene {
   preload() {
     this.load.atlas('animals', 'assets/animals.png', 'assets/animals_atlas.json');
     this.load.image('bomb', 'assets/bomb.png');
+    this.load.image('match-particle', 'assets/white_particle.png');
   }
 
   create() {
@@ -84,8 +88,22 @@ export class MainScene extends Phaser.Scene {
 
     this.tileWidth = this.game.scale.gameSize.width / 6;
     this.tileHeight = this.game.scale.gameSize.width / 6;
-
     this.yOffset = this.game.scale.gameSize.height / 4;
+    this.assetScale = (this.tileWidth - 10) / this.assetTileSize;
+
+    this.matchParticles = this.add.particles('match-particle');
+    this.matchParticles.createEmitter({
+        angle: { min: 240, max: 300 },
+        speed: { min: 400, max: 600 },
+        quantity: { min: 20, max: 50 },
+        lifespan: 1000,
+        alpha: { start: 1, end: 0 },
+        scale: this.assetScale,
+        gravityY: 800,
+        on: false
+    });
+
+    this.getPowerups();
 
     this.tiles = this.add.group();
 
@@ -122,19 +140,15 @@ export class MainScene extends Phaser.Scene {
         }
 
       }
-
     }
-    this.getPowerups();
   }
 
   getPowerups() {
     this.bombs.forEach(bomb => bomb.destroy());
     const bombs = (this.gameInstanceService as any).bombPowerUps;
-    console.log('bombs: ', bombs);
-    const x = 50;
-    const y = 100;
     for (let i = 0; i < bombs; i++) {
-      const bomb = this.add.image(x * (i + 1), y, 'bomb').setScale(.1);
+      const bomb = this.add.image(i * this.tileWidth + this.tileWidth / 2, this.yOffset - this.tileHeight / 2, 'bomb')
+        .setScale(this.assetScale).setOrigin(0.5);
       this.bombs.push(bomb);
     }
   }
@@ -164,7 +178,7 @@ export class MainScene extends Phaser.Scene {
 
     const tileToAdd = this.tileTypes[this.random.integerInRange(0, this.gameInstanceService.currentActiveTileTypes - 1)];
     const tile = this.tiles.create((x * this.tileWidth) + this.tileWidth / 2, 0, 'animals', tileToAdd);
-    tile.scale = (this.tileWidth - 10) / this.assetTileSize;
+    tile.scale = this.assetScale;
 
     this.add.tween({
       targets: tile,
@@ -186,7 +200,9 @@ export class MainScene extends Phaser.Scene {
 
   private tileDown(tile: Phaser.GameObjects.Sprite) {
     const vibrationSvc = (this.gameInstanceService as any).vibrationSvc as VibrationService;
-    vibrationSvc.giveHapticFeedback();
+    if (Capacitor.platform !== 'web') {
+      vibrationSvc.giveHapticFeedback();
+    }
     if (this.canMove) {
       this.activeTile1 = tile;
       this.startPosX = (tile.x - this.tileWidth / 2) / this.tileWidth;
@@ -243,7 +259,9 @@ export class MainScene extends Phaser.Scene {
     const vibrationSvc = (this.gameInstanceService as any).vibrationSvc as VibrationService;
     const matches = this.getMatches();
     if (matches.length > 0) {
-      vibrationSvc.vibrate();
+      /*if (Capacitor.platform !== 'web') {
+        vibrationSvc.vibrate();
+      }*/
       this.removeTileGroup(matches);
       this.resetTile();
       this.fillTile();
@@ -351,10 +369,10 @@ export class MainScene extends Phaser.Scene {
   }
 
   removeTileGroup(matches) {
-    console.log('matches: ', matches);
     for (const tempArr of matches) {
       for (const tile of tempArr) {
         const tilePos = this.getTilePos(this.tileGrid, tile);
+        this.matchParticles.emitParticleAt(tile.x, tile.y);
         this.tiles.remove(tile, true);
         this.incrementScore();
         if (tilePos.x !== -1 && tilePos.y !== -1) {
