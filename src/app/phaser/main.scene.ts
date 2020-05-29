@@ -397,6 +397,17 @@ export class MainScene extends Phaser.Scene {
         strokeThickness: 5
       }).setOrigin(0.5).setDepth(1);
 
+      this.tweens.add({
+          targets: levelText,
+          scaleX: 1,
+          scaleY: 1,
+          angle: 360,
+          _ease: 'Sine.easeInOut',
+          ease: 'Power2',
+          duration: 1000,
+          delay: 50
+      });
+
       this.time.addEvent({
         delay: 5000, callback: () => {
           levelText.destroy(true);
