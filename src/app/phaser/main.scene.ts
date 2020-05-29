@@ -281,10 +281,35 @@ export class MainScene extends Phaser.Scene {
       this.time.addEvent({
         delay: 500, callback: () => {
           this.tileUp();
-          this.canMove = true;
+          this.canMove = !this.checkGameOver();
         }
       });
     }
+  }
+
+  private checkGameOver() {
+    if (this.gameInstanceService.bombPowerUps === 0 && !this.checkSwapPossible()) {
+      const levelText = this.add.text(this.game.scale.gameSize.width / 2, this.game.scale.gameSize.height / 2, 'Game Over \nNo more moves',
+      {
+        align: 'center',
+        fontSize: '32px',
+        stroke: '#000000',
+        strokeThickness: 5
+      }).setOrigin(0.5).setDepth(1);
+
+      this.tweens.add({
+          targets: levelText,
+          scaleX: 1,
+          scaleY: 1,
+          angle: 360,
+          _ease: 'Sine.easeInOut',
+          ease: 'Power2',
+          duration: 1000,
+          delay: 50
+      });
+      return true;
+    }
+    return false;
   }
 
   private clearTiles() {
@@ -374,6 +399,83 @@ export class MainScene extends Phaser.Scene {
     return matches;
   }
 
+  private checkSwapPossible() {
+    const testGrid = [];
+    for (const tempArr of this.tileGrid) {
+      const testArr = [];
+      for (const tempTile of tempArr) {
+        testArr.push({ tileType: tempTile.tileType });
+      }
+      testGrid.push(testArr);
+    }
+
+    for (let i = 0; i < testGrid.length; i++) {
+      for (let j = 0; j < testGrid[i].length; j++) {
+        if (j > 0) {
+          const tile1 = testGrid[i][j];
+          const tile2 = testGrid[i][j - 1];
+
+          testGrid[i][j] = tile2;
+          testGrid[i][j - 1] = tile1;
+
+          if (this.getMatches(testGrid).length > 0) {
+            return true;
+          }
+
+          testGrid[i][j] = tile1;
+          testGrid[i][j - 1] = tile2;
+        }
+
+        if (j < testGrid[i].length - 1) {
+          const tile1 = testGrid[i][j];
+          const tile2 = testGrid[i][j + 1];
+
+          testGrid[i][j] = tile2;
+          testGrid[i][j + 1] = tile1;
+
+          if (this.getMatches(testGrid).length > 0) {
+            return true;
+          }
+
+          testGrid[i][j] = tile1;
+          testGrid[i][j + 1] = tile2;
+        }
+
+        if (i > 0) {
+          const tile1 = testGrid[i][j];
+          const tile2 = testGrid[i - 1][j];
+
+          testGrid[i][j] = tile2;
+          testGrid[i - 1][j] = tile1;
+
+          if (this.getMatches(testGrid).length > 0) {
+            return true;
+          }
+
+          testGrid[i][j] = tile1;
+          testGrid[i - 1][j] = tile2;
+        }
+
+        if (i < testGrid.length - 1) {
+          const tile1 = testGrid[i][j];
+          const tile2 = testGrid[i + 1][j];
+
+          testGrid[i][j] = tile2;
+          testGrid[i + 1][j] = tile1;
+
+          if (this.getMatches(testGrid).length > 0) {
+            return true;
+          }
+
+          testGrid[i][j] = tile1;
+          testGrid[i + 1][j] = tile2;
+        }
+      }
+    }
+
+    return false;
+  }
+
   private removeTileGroup(matches) {
     for (const tempArr of matches) {
       for (const tile of tempArr) {
@@ -419,7 +521,7 @@ export class MainScene extends Phaser.Scene {
       });
 
       this.time.addEvent({
-        delay: 5000, callback: () => {
+        delay: 2000, callback: () => {
           levelText.destroy(true);
         }
       });
