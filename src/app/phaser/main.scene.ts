@@ -389,6 +389,19 @@ export class MainScene extends Phaser.Scene {
       if (this.gameInstanceService.currentActiveTileTypes < this.tileTypes.length) {
         this.gameInstanceService.currentActiveTileTypes++;
       }
+
+      const levelText = this.add.text(this.game.scale.gameSize.width / 2, this.game.scale.gameSize.height / 2, `Level ${this.gameInstanceService.level}`,
+      {
+        fontSize: '32px',
+        stroke: '#000000',
+        strokeThickness: 5
+      }).setOrigin(0.5).setDepth(1);
+
+      this.time.addEvent({
+        delay: 5000, callback: () => {
+          levelText.destroy(true);
+        }
+      });
     }
   }
 
