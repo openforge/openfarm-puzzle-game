@@ -114,8 +114,7 @@ export class MainScene extends Phaser.Scene {
 
     const powerUpEmitter$ = (this.gameInstanceService as any).powerUpEmitter$ as Observable<void>;
     powerUpEmitter$.pipe(skip(1), debounceTime(500)).subscribe(() => {
-      (this.gameInstanceService as any).decreasePowerup();
-      this.clearTiles();
+      this.triggerBomb();
     });
   }
 
@@ -148,8 +147,17 @@ export class MainScene extends Phaser.Scene {
     const bombs = (this.gameInstanceService as any).bombPowerUps;
     for (let i = 0; i < bombs; i++) {
       const bomb = this.add.image(i * this.tileWidth + this.tileWidth / 2, this.yOffset - this.tileHeight / 2, 'bomb')
-        .setScale(this.assetScale).setOrigin(0.5);
+        .setScale(this.assetScale).setOrigin(0.5).setInteractive();
+      (bomb as Phaser.GameObjects.Sprite).on('pointerdown', () => this.triggerBomb());
       this.bombs.push(bomb);
+    }
+  }
+
+  triggerBomb() {
+    if (this.gameInstanceService.bombPowerUps > 0) {
+      this.gameInstanceService.decreasePowerup();
+      this.bombs[this.gameInstanceService.bombPowerUps].destroy(true);
+      this.clearTiles();
     }
   }
 
@@ -257,7 +265,7 @@ export class MainScene extends Phaser.Scene {
 
   private checkMatch() {
     const vibrationSvc = (this.gameInstanceService as any).vibrationSvc as VibrationService;
-    const matches = this.getMatches();
+    const matches = this.getMatches(this.tileGrid);
     if (matches.length > 0) {
       if (Capacitor.platform !== 'web') {
         vibrationSvc.vibrate();
@@ -291,35 +299,33 @@ export class MainScene extends Phaser.Scene {
     this.activeTile2 = null;
   }
 
-  private getMatches() {
-
+  private getMatches(grid) {
     const matches = [];
     let groups = [];
-
     // Check for horizontal matches
     let i = 0;
-    for (const tempArr of this.tileGrid) {
+    for (const tempArr of grid) {
       groups = [];
       for (let j = 0; j < tempArr.length; j++) {
         if (j < tempArr.length - 2) {
-          if (this.tileGrid[i][j] && this.tileGrid[i][j + 1] && this.tileGrid[i][j + 2]) {
-            if (this.tileGrid[i][j].tileType === this.tileGrid[i][j + 1].tileType &&
-              this.tileGrid[i][j + 1].tileType === this.tileGrid[i][j + 2].tileType) {
+          if (grid[i][j] && grid[i][j + 1] && grid[i][j + 2]) {
+            if (grid[i][j].tileType === grid[i][j + 1].tileType &&
+              grid[i][j + 1].tileType === grid[i][j + 2].tileType) {
               if (groups.length > 0) {
-                if (groups.indexOf(this.tileGrid[i][j]) === -1) {
+                if (groups.indexOf(grid[i][j]) === -1) {
                   matches.push(groups);
                   groups = [];
                 }
               }
 
-              if (groups.indexOf(this.tileGrid[i][j]) === -1) {
-                groups.push(this.tileGrid[i][j]);
+              if (groups.indexOf(grid[i][j]) === -1) {
+                groups.push(grid[i][j]);
               }
-              if (groups.indexOf(this.tileGrid[i][j + 1]) === -1) {
-                groups.push(this.tileGrid[i][j + 1]);
+              if (groups.indexOf(grid[i][j + 1]) === -1) {
+                groups.push(grid[i][j + 1]);
               }
-              if (groups.indexOf(this.tileGrid[i][j + 2]) === -1) {
-                groups.push(this.tileGrid[i][j + 2]);
+              if (groups.indexOf(grid[i][j + 2]) === -1) {
+                groups.push(grid[i][j + 2]);
               }
             }
           }
@@ -333,28 +339,28 @@ export class MainScene extends Phaser.Scene {
 
     // Check for vertical matches
     let j = 0;
-    for (const tempArr of this.tileGrid) {
+    for (const tempArr of grid) {
       groups = [];
       for (i = 0; i < tempArr.length; i++) {
         if (i < tempArr.length - 2) {
-          if (this.tileGrid[i][j] && this.tileGrid[i + 1][j] && this.tileGrid[i + 2][j]) {
-            if (this.tileGrid[i][j].tileType === this.tileGrid[i + 1][j].tileType &&
-              this.tileGrid[i + 1][j].tileType === this.tileGrid[i + 2][j].tileType) {
+          if (grid[i][j] && grid[i + 1][j] && grid[i + 2][j]) {
+            if (grid[i][j].tileType === grid[i + 1][j].tileType &&
+              grid[i + 1][j].tileType === grid[i + 2][j].tileType) {
               if (groups.length > 0) {
-                if (groups.indexOf(this.tileGrid[i][j]) === -1) {
+                if (groups.indexOf(grid[i][j]) === -1) {
                   matches.push(groups);
                   groups = [];
                 }
               }
 
-              if (groups.indexOf(this.tileGrid[i][j]) === -1) {
-                groups.push(this.tileGrid[i][j]);
+              if (groups.indexOf(grid[i][j]) === -1) {
+                groups.push(grid[i][j]);
               }
-              if (groups.indexOf(this.tileGrid[i + 1][j]) === -1) {
-                groups.push(this.tileGrid[i + 1][j]);
+              if (groups.indexOf(grid[i + 1][j]) === -1) {
+                groups.push(grid[i + 1][j]);
               }
-              if (groups.indexOf(this.tileGrid[i + 2][j]) === -1) {
-                groups.push(this.tileGrid[i + 2][j]);
+              if (groups.indexOf(grid[i + 2][j]) === -1) {
+                groups.push(grid[i + 2][j]);
               }
             }
           }
