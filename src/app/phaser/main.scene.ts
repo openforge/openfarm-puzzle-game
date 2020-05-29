@@ -143,7 +143,7 @@ export class MainScene extends Phaser.Scene {
     }
   }
 
-  getPowerups() {
+  private getPowerups() {
     this.bombs.forEach(bomb => bomb.destroy());
     const bombs = (this.gameInstanceService as any).bombPowerUps;
     for (let i = 0; i < bombs; i++) {
@@ -153,7 +153,7 @@ export class MainScene extends Phaser.Scene {
     }
   }
 
-  shuffleTileTypes() {
+  private shuffleTileTypes() {
     let j;
     let x;
     for (let i = this.tileTypes.length - 1; i > 0; i--) {
@@ -255,13 +255,13 @@ export class MainScene extends Phaser.Scene {
     }
   }
 
-  checkMatch() {
+  private checkMatch() {
     const vibrationSvc = (this.gameInstanceService as any).vibrationSvc as VibrationService;
     const matches = this.getMatches();
     if (matches.length > 0) {
-      /*if (Capacitor.platform !== 'web') {
+      if (Capacitor.platform !== 'web') {
         vibrationSvc.vibrate();
-      }*/
+      }
       this.removeTileGroup(matches);
       this.resetTile();
       this.fillTile();
@@ -279,19 +279,19 @@ export class MainScene extends Phaser.Scene {
     }
   }
 
-  clearTiles() {
+  private clearTiles() {
     const vibrationSvc = (this.gameInstanceService as any).vibrationSvc as VibrationService;
     vibrationSvc.vibrate();
     this.removeTileGroup(this.tileGrid);
     this.fillTile();
   }
 
-  tileUp() {
+  private tileUp() {
     this.activeTile1 = null;
     this.activeTile2 = null;
   }
 
-  getMatches() {
+  private getMatches() {
 
     const matches = [];
     let groups = [];
@@ -368,7 +368,7 @@ export class MainScene extends Phaser.Scene {
     return matches;
   }
 
-  removeTileGroup(matches) {
+  private removeTileGroup(matches) {
     for (const tempArr of matches) {
       for (const tile of tempArr) {
         const tilePos = this.getTilePos(this.tileGrid, tile);
@@ -382,8 +382,12 @@ export class MainScene extends Phaser.Scene {
     }
   }
 
-  incrementScore() {
+  private incrementScore() {
     this.gameInstanceService.score += 10;
+    this.checkLevelChange();
+  }
+
+  private checkLevelChange() {
     if (this.gameInstanceService.score > 0 && this.gameInstanceService.score % this.gameInstanceService.levelChangeScore === 0) {
       this.gameInstanceService.level++;
       if (this.gameInstanceService.currentActiveTileTypes < this.tileTypes.length) {
@@ -416,7 +420,7 @@ export class MainScene extends Phaser.Scene {
     }
   }
 
-  getTilePos(tileGrid, tile) {
+  private getTilePos(tileGrid, tile) {
     const pos = { x: -1, y: -1 };
 
     for (let i = 0; i < tileGrid.length; i++) {
@@ -432,7 +436,7 @@ export class MainScene extends Phaser.Scene {
     return pos;
   }
 
-  resetTile() {
+  private resetTile() {
     // tslint:disable-next-line: prefer-for-of
     for (let i = 0; i < this.tileGrid.length; i++) {
       for (let j = this.tileGrid[i].length - 1; j > 0; j--) {
@@ -456,7 +460,7 @@ export class MainScene extends Phaser.Scene {
     }
   }
 
-  fillTile() {
+  private fillTile() {
     for (let i = 0; i < this.tileGrid.length; i++) {
       for (let j = 0; j < this.tileGrid.length; j++) {
         if (this.tileGrid[i][j] == null) {
