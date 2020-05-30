@@ -4,8 +4,10 @@ import { MainScene } from '../phaser/main.scene';
 import { VibrationService } from './vibration.service';
 import { Plugins } from '@capacitor/core';
 import { BehaviorSubject } from 'rxjs';
+import '@openforge/capacitor-game-services';
+import { GameServicesPlugin } from '@openforge/capacitor-game-services';
 
-const { Motion } = Plugins;
+const { Motion, GameServices } = Plugins;
 
 @Injectable({ providedIn: 'root' })
 export class GameInstanceService {
@@ -57,6 +59,7 @@ export class GameInstanceService {
       });
       this.gameInstance.gameInstanceService = this;
       this.gameInstance.vibrationSvc = this.vibrationSvc;
+      GameServices.signIn();
     }
   }
 
@@ -66,6 +69,10 @@ export class GameInstanceService {
     this.currentActiveTileTypes = 4;
     const game = this.gameInstance as Phaser.Game;
     game.scene.getScene(MainScene.KEY).scene.restart();
+  }
+
+  showLeaderboard() {
+    (GameServices as GameServicesPlugin).showLeaderboard({ leaderboardId: 'CgkIzPzc8d4XEAIQAQ' });
   }
 
 }

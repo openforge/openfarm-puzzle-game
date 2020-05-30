@@ -1,6 +1,13 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        debugHarry {
+            storeFile file('/Users/harryscheuerle/.android/debug.keystore')
+            keyAlias 'androiddebugkey'
+            storePassword 'android'
+        }
+    }
     compileSdkVersion rootProject.ext.compileSdkVersion
     defaultConfig {
         applicationId "io.openforge.phaserexample"
