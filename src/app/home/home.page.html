@@ -4,10 +4,10 @@
 
 <ion-header>
   <ion-toolbar>
-      <section class="score-section">
-          <p>Score: {{gameInstanceService.score}}</p>
-          <p>Level {{gameInstanceService.level}}</p>
-      </section>
+    <section class="score-section">
+      <p (click)="gameInstanceService.showLeaderboard()">Score: {{gameInstanceService.score}}</p>
+      <p>Level {{gameInstanceService.level}}</p>
+    </section>
   </ion-toolbar>
 </ion-header>
 
