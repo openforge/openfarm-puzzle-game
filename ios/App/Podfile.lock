@@ -1,0 +1,28 @@
+PODS:
+  - Capacitor (2.1.2):
+    - CapacitorCordova (= 2.1.2)
+  - CapacitorCordova (2.1.2)
+  - OpenforgeCapacitorGameServices (0.3.0):
+    - Capacitor
+
+DEPENDENCIES:
+  - "Capacitor (from `../../node_modules/@capacitor/ios`)"
+  - "CapacitorCordova (from `../../node_modules/@capacitor/ios`)"
+  - "OpenforgeCapacitorGameServices (from `../../node_modules/@openforge/capacitor-game-services`)"
+
+EXTERNAL SOURCES:
+  Capacitor:
+    :path: "../../node_modules/@capacitor/ios"
+  CapacitorCordova:
+    :path: "../../node_modules/@capacitor/ios"
+  OpenforgeCapacitorGameServices:
+    :path: "../../node_modules/@openforge/capacitor-game-services"
+
+SPEC CHECKSUMS:
+  Capacitor: d17f1bd38e40c914d5fc8814a5a570c8ea9d06e5
+  CapacitorCordova: 15b35823eec498895b6896c2103fda96ffaa3553
+  OpenforgeCapacitorGameServices: 2b238277cc724973a64b2ba7ee529fdc840f325a
+
+PODFILE CHECKSUM: 0d7e8598a025f9ff0da6f3bd6aab629c26ae05bf
+
+COCOAPODS: 1.9.3
