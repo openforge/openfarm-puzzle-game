@@ -130,7 +130,6 @@ export class MainScene extends Phaser.Scene {
   getPowerups() {
     this.bombs.forEach(bomb => bomb.destroy());
     const bombs = (this.gameInstanceService as any).bombPowerUps;
-    console.log('bombs: ', bombs);
     const x = 50;
     const y = 100;
     for (let i = 0; i < bombs; i++) {
