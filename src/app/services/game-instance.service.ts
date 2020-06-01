@@ -4,6 +4,7 @@ import { MainScene } from '../phaser/main.scene';
 import { VibrationService } from './vibration.service';
 import { Plugins } from '@capacitor/core';
 import { BehaviorSubject } from 'rxjs';
+import '@openforge/capacitor-game-services';
 
 const { Motion } = Plugins;
 
