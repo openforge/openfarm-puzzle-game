@@ -11,6 +11,7 @@ const { Motion, GameServices } = Plugins;
 
 @Injectable({ providedIn: 'root' })
 export class GameInstanceService {
+  private readonly leaderboardId = 'CgkIzPzc8d4XEAIQAQ';
 
   public gameInstance: any;
   score = 0;
@@ -64,6 +65,7 @@ export class GameInstanceService {
   }
 
   restart() {
+    this.submitScore(this.score);
     this.score = 0;
     this.level = 1;
     this.currentActiveTileTypes = 4;
@@ -71,8 +73,14 @@ export class GameInstanceService {
     game.scene.getScene(MainScene.KEY).scene.restart();
   }
 
-  showLeaderboard() {
-    (GameServices as GameServicesPlugin).showLeaderboard({ leaderboardId: 'CgkIzPzc8d4XEAIQAQ' });
+  public submitScore(score: number) {
+    const { leaderboardId } = this;
+    (GameServices as GameServicesPlugin).submitScore({ leaderboardId, score, });
+  }
+
+  public showLeaderboard() {
+    const { leaderboardId } = this;
+    (GameServices as GameServicesPlugin).showLeaderboard({ leaderboardId });
   }
 
 }
