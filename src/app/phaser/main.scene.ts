@@ -337,9 +337,11 @@ export class MainScene extends Phaser.Scene {
     let groups = [];
     // Check for horizontal matches
     let i = 0;
+    let j = 0;
+
     for (const tempArr of grid) {
       groups = [];
-      for (let j = 0; j < tempArr.length; j++) {
+      for (j = 0; j < tempArr.length; j++) {
         if (j < tempArr.length - 2) {
           if (grid[i][j] && grid[i][j + 1] && grid[i][j + 2]) {
             if (grid[i][j].tileType === grid[i][j + 1].tileType &&
@@ -370,8 +372,10 @@ export class MainScene extends Phaser.Scene {
       i++;
     }
 
+    i = 0;
+    j = 0;
+
     // Check for vertical matches
-    let j = 0;
     for (const tempArr of grid) {
       groups = [];
       for (i = 0; i < tempArr.length; i++) {
