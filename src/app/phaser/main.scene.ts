@@ -287,15 +287,23 @@ export class MainScene extends Phaser.Scene {
     }
   }
 
-  private checkGameOver() {
-    if (this.gameInstanceService.bombPowerUps === 0 && !this.checkSwapPossible()) {
-      const levelText = this.add.text(this.game.scale.gameSize.width / 2, this.game.scale.gameSize.height / 2, 'Game Over \nNo more moves',
-        {
-          align: 'center',
-          fontSize: '32px',
-          stroke: '#000000',
-          strokeThickness: 5
-        }).setOrigin(0.5).setDepth(1);
+  private checkGameOver(): boolean {
+    const outOfBombs: boolean = this.gameInstanceService.bombPowerUps === 0;
+    const outOfMoves: boolean = !this.checkSwapPossible();
+
+    if (outOfBombs && outOfMoves) {
+      this.gameInstanceService.submitScore();
+
+      const levelText = this.add
+        .text(this.game.scale.gameSize.width / 2, this.game.scale.gameSize.height / 2, 'Game Over \nNo more moves',
+          {
+            align: 'center',
+            fontSize: '32px',
+            stroke: '#000000',
+            strokeThickness: 5
+          })
+        .setOrigin(0.5)
+        .setDepth(1);
 
       this.tweens.add({
         targets: levelText,
