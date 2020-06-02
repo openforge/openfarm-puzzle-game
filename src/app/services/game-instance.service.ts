@@ -65,7 +65,7 @@ export class GameInstanceService {
   }
 
   restart() {
-    this.submitScore(this.score);
+    this.submitScore();
     this.score = 0;
     this.level = 1;
     this.currentActiveTileTypes = 4;
@@ -74,12 +74,17 @@ export class GameInstanceService {
     game.scene.getScene(MainScene.KEY).scene.restart();
   }
 
-  public submitScore(score: number) {
-    const { leaderboardId } = this;
+  public submitScore(): void {
+    const { leaderboardId, score } = this;
+    if (score === 0) {
+      console.warn('cannot submit score of 0, make sure to call this method before resetting the score property');
+      return;
+    }
     (GameServices as GameServicesPlugin).submitScore({ leaderboardId, score, });
+    return;
   }
 
-  public showLeaderboard() {
+  public showLeaderboard(): void {
     const { leaderboardId } = this;
     (GameServices as GameServicesPlugin).showLeaderboard({ leaderboardId });
   }
