@@ -7,7 +7,8 @@ import { BehaviorSubject } from 'rxjs';
 import '@openforge/capacitor-game-services';
 import { GameServicesPlugin } from '@openforge/capacitor-game-services';
 
-const { Motion, GameServices } = Plugins;
+const { Motion } = Plugins;
+const GameServices = Plugins.GameServices as GameServicesPlugin;
 
 @Injectable({ providedIn: 'root' })
 export class GameInstanceService {
@@ -80,13 +81,13 @@ export class GameInstanceService {
       console.warn('cannot submit score of 0, make sure to call this method before resetting the score property');
       return;
     }
-    (GameServices as GameServicesPlugin).submitScore({ leaderboardId, score, });
+    GameServices.submitScore({ leaderboardId, score, });
     return;
   }
 
   public showLeaderboard(): void {
     const { leaderboardId } = this;
-    (GameServices as GameServicesPlugin).showLeaderboard({ leaderboardId });
+    GameServices.showLeaderboard({ leaderboardId });
   }
 
 }
