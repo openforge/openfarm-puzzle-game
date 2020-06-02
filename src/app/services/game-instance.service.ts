@@ -69,6 +69,7 @@ export class GameInstanceService {
     this.score = 0;
     this.level = 1;
     this.currentActiveTileTypes = 4;
+    this.bombPowerUps = 3;
     const game = this.gameInstance as Phaser.Game;
     game.scene.getScene(MainScene.KEY).scene.restart();
   }

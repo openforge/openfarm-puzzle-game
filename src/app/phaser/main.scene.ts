@@ -3,6 +3,7 @@ import { GameInstanceService } from '../services/game-instance.service';
 import { VibrationService } from '../services/vibration.service';
 import { skip, debounceTime } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { Capacitor } from '@capacitor/core';
 
 export class MainScene extends Phaser.Scene {
   static KEY = 'main-scene';
@@ -63,11 +64,13 @@ export class MainScene extends Phaser.Scene {
   tileWidth: number;
   tileHeight: number;
   yOffset: number;
+  assetScale: number;
 
   tiles: Phaser.GameObjects.Group;
   random: Phaser.Math.RandomDataGenerator;
 
   gameInstanceService: GameInstanceService;
+  matchParticles: Phaser.GameObjects.Particles.ParticleEmitterManager;
 
   constructor() {
     super({ key: MainScene.KEY });
@@ -76,6 +79,7 @@ export class MainScene extends Phaser.Scene {
   preload() {
     this.load.atlas('animals', 'assets/animals.png', 'assets/animals_atlas.json');
     this.load.image('bomb', 'assets/bomb.png');
+    this.load.image('match-particle', 'assets/white_particle.png');
   }
 
   create() {
@@ -84,8 +88,22 @@ export class MainScene extends Phaser.Scene {
 
     this.tileWidth = this.game.scale.gameSize.width / 6;
     this.tileHeight = this.game.scale.gameSize.width / 6;
-
     this.yOffset = this.game.scale.gameSize.height / 4;
+    this.assetScale = (this.tileWidth - 10) / this.assetTileSize;
+
+    this.matchParticles = this.add.particles('match-particle');
+    this.matchParticles.createEmitter({
+      angle: { min: 240, max: 300 },
+      speed: { min: 400, max: 600 },
+      quantity: { min: 20, max: 50 },
+      lifespan: 1000,
+      alpha: { start: 1, end: 0 },
+      scale: this.assetScale,
+      gravityY: 800,
+      on: false
+    });
+
+    this.getPowerups();
 
     this.tiles = this.add.group();
 
@@ -96,8 +114,7 @@ export class MainScene extends Phaser.Scene {
 
     const powerUpEmitter$ = (this.gameInstanceService as any).powerUpEmitter$ as Observable<void>;
     powerUpEmitter$.pipe(skip(1), debounceTime(500)).subscribe(() => {
-      (this.gameInstanceService as any).decreasePowerup();
-      this.clearTiles();
+      this.triggerBomb();
     });
   }
 
@@ -122,23 +139,29 @@ export class MainScene extends Phaser.Scene {
         }
 
       }
-
     }
-    this.getPowerups();
   }
 
-  getPowerups() {
+  private getPowerups() {
     this.bombs.forEach(bomb => bomb.destroy());
     const bombs = (this.gameInstanceService as any).bombPowerUps;
-    const x = 50;
-    const y = 100;
     for (let i = 0; i < bombs; i++) {
-      const bomb = this.add.image(x * (i + 1), y, 'bomb').setScale(.1);
+      const bomb = this.add.image(i * this.tileWidth + this.tileWidth / 2, this.yOffset - this.tileHeight / 2, 'bomb')
+        .setScale(this.assetScale).setOrigin(0.5).setInteractive();
+      (bomb as Phaser.GameObjects.Sprite).on('pointerdown', () => this.triggerBomb());
       this.bombs.push(bomb);
     }
   }
 
-  shuffleTileTypes() {
+  triggerBomb() {
+    if (this.gameInstanceService.bombPowerUps > 0) {
+      this.gameInstanceService.decreasePowerup();
+      this.bombs[this.gameInstanceService.bombPowerUps].destroy(true);
+      this.clearTiles();
+    }
+  }
+
+  private shuffleTileTypes() {
     let j;
     let x;
     for (let i = this.tileTypes.length - 1; i > 0; i--) {
@@ -163,7 +186,7 @@ export class MainScene extends Phaser.Scene {
 
     const tileToAdd = this.tileTypes[this.random.integerInRange(0, this.gameInstanceService.currentActiveTileTypes - 1)];
     const tile = this.tiles.create((x * this.tileWidth) + this.tileWidth / 2, 0, 'animals', tileToAdd);
-    tile.scale = (this.tileWidth - 10) / this.assetTileSize;
+    tile.scale = this.assetScale;
 
     this.add.tween({
       targets: tile,
@@ -185,7 +208,9 @@ export class MainScene extends Phaser.Scene {
 
   private tileDown(tile: Phaser.GameObjects.Sprite) {
     const vibrationSvc = (this.gameInstanceService as any).vibrationSvc as VibrationService;
-    vibrationSvc.giveHapticFeedback();
+    if (Capacitor.platform !== 'web') {
+      vibrationSvc.giveHapticFeedback();
+    }
     if (this.canMove) {
       this.activeTile1 = tile;
       this.startPosX = (tile.x - this.tileWidth / 2) / this.tileWidth;
@@ -238,11 +263,13 @@ export class MainScene extends Phaser.Scene {
     }
   }
 
-  checkMatch() {
+  private checkMatch() {
     const vibrationSvc = (this.gameInstanceService as any).vibrationSvc as VibrationService;
-    const matches = this.getMatches();
+    const matches = this.getMatches(this.tileGrid);
     if (matches.length > 0) {
-      vibrationSvc.vibrate();
+      if (Capacitor.platform !== 'web') {
+        vibrationSvc.vibrate();
+      }
       this.removeTileGroup(matches);
       this.resetTile();
       this.fillTile();
@@ -254,53 +281,76 @@ export class MainScene extends Phaser.Scene {
       this.time.addEvent({
         delay: 500, callback: () => {
           this.tileUp();
-          this.canMove = true;
+          this.canMove = !this.checkGameOver();
         }
       });
     }
   }
 
-  clearTiles() {
+  private checkGameOver() {
+    if (this.gameInstanceService.bombPowerUps === 0 && !this.checkSwapPossible()) {
+      const levelText = this.add.text(this.game.scale.gameSize.width / 2, this.game.scale.gameSize.height / 2, 'Game Over \nNo more moves',
+        {
+          align: 'center',
+          fontSize: '32px',
+          stroke: '#000000',
+          strokeThickness: 5
+        }).setOrigin(0.5).setDepth(1);
+
+      this.tweens.add({
+        targets: levelText,
+        scaleX: 1,
+        scaleY: 1,
+        angle: 360,
+        _ease: 'Sine.easeInOut',
+        ease: 'Power2',
+        duration: 1000,
+        delay: 50
+      });
+      return true;
+    }
+    return false;
+  }
+
+  private clearTiles() {
     const vibrationSvc = (this.gameInstanceService as any).vibrationSvc as VibrationService;
     vibrationSvc.vibrate();
     this.removeTileGroup(this.tileGrid);
     this.fillTile();
   }
 
-  tileUp() {
+  private tileUp() {
     this.activeTile1 = null;
     this.activeTile2 = null;
   }
 
-  getMatches() {
-
+  private getMatches(grid) {
     const matches = [];
     let groups = [];
-
     // Check for horizontal matches
     let i = 0;
-    for (const tempArr of this.tileGrid) {
+    for (const tempArr of grid) {
       groups = [];
       for (let j = 0; j < tempArr.length; j++) {
         if (j < tempArr.length - 2) {
-          if (this.tileGrid[i][j] && this.tileGrid[i][j + 1] && this.tileGrid[i][j + 2]) {
-            if (this.tileGrid[i][j].tileType === this.tileGrid[i][j + 1].tileType &&
-              this.tileGrid[i][j + 1].tileType === this.tileGrid[i][j + 2].tileType) {
+          if (grid[i][j] && grid[i][j + 1] && grid[i][j + 2]) {
+            if (grid[i][j].tileType === grid[i][j + 1].tileType &&
+              grid[i][j + 1].tileType === grid[i][j + 2].tileType) {
               if (groups.length > 0) {
-                if (groups.indexOf(this.tileGrid[i][j]) === -1) {
+                if (groups.indexOf(grid[i][j]) === -1) {
                   matches.push(groups);
                   groups = [];
                 }
               }
 
-              if (groups.indexOf(this.tileGrid[i][j]) === -1) {
-                groups.push(this.tileGrid[i][j]);
+              if (groups.indexOf(grid[i][j]) === -1) {
+                groups.push(grid[i][j]);
               }
-              if (groups.indexOf(this.tileGrid[i][j + 1]) === -1) {
-                groups.push(this.tileGrid[i][j + 1]);
+              if (groups.indexOf(grid[i][j + 1]) === -1) {
+                groups.push(grid[i][j + 1]);
               }
-              if (groups.indexOf(this.tileGrid[i][j + 2]) === -1) {
-                groups.push(this.tileGrid[i][j + 2]);
+              if (groups.indexOf(grid[i][j + 2]) === -1) {
+                groups.push(grid[i][j + 2]);
               }
             }
           }
@@ -314,28 +364,28 @@ export class MainScene extends Phaser.Scene {
 
     // Check for vertical matches
     let j = 0;
-    for (const tempArr of this.tileGrid) {
+    for (const tempArr of grid) {
       groups = [];
       for (i = 0; i < tempArr.length; i++) {
         if (i < tempArr.length - 2) {
-          if (this.tileGrid[i][j] && this.tileGrid[i + 1][j] && this.tileGrid[i + 2][j]) {
-            if (this.tileGrid[i][j].tileType === this.tileGrid[i + 1][j].tileType &&
-              this.tileGrid[i + 1][j].tileType === this.tileGrid[i + 2][j].tileType) {
+          if (grid[i][j] && grid[i + 1][j] && grid[i + 2][j]) {
+            if (grid[i][j].tileType === grid[i + 1][j].tileType &&
+              grid[i + 1][j].tileType === grid[i + 2][j].tileType) {
               if (groups.length > 0) {
-                if (groups.indexOf(this.tileGrid[i][j]) === -1) {
+                if (groups.indexOf(grid[i][j]) === -1) {
                   matches.push(groups);
                   groups = [];
                 }
               }
 
-              if (groups.indexOf(this.tileGrid[i][j]) === -1) {
-                groups.push(this.tileGrid[i][j]);
+              if (groups.indexOf(grid[i][j]) === -1) {
+                groups.push(grid[i][j]);
               }
-              if (groups.indexOf(this.tileGrid[i + 1][j]) === -1) {
-                groups.push(this.tileGrid[i + 1][j]);
+              if (groups.indexOf(grid[i + 1][j]) === -1) {
+                groups.push(grid[i + 1][j]);
               }
-              if (groups.indexOf(this.tileGrid[i + 2][j]) === -1) {
-                groups.push(this.tileGrid[i + 2][j]);
+              if (groups.indexOf(grid[i + 2][j]) === -1) {
+                groups.push(grid[i + 2][j]);
               }
             }
           }
@@ -349,11 +399,88 @@ export class MainScene extends Phaser.Scene {
     return matches;
   }
 
-  removeTileGroup(matches) {
-    console.log('matches: ', matches);
+  private checkSwapPossible() {
+    const testGrid = [];
+    for (const tempArr of this.tileGrid) {
+      const testArr = [];
+      for (const tempTile of tempArr) {
+        testArr.push({ tileType: tempTile.tileType });
+      }
+      testGrid.push(testArr);
+    }
+
+    for (let i = 0; i < testGrid.length; i++) {
+      for (let j = 0; j < testGrid[i].length; j++) {
+        if (j > 0) {
+          const tile1 = testGrid[i][j];
+          const tile2 = testGrid[i][j - 1];
+
+          testGrid[i][j] = tile2;
+          testGrid[i][j - 1] = tile1;
+
+          if (this.getMatches(testGrid).length > 0) {
+            return true;
+          }
+
+          testGrid[i][j] = tile1;
+          testGrid[i][j - 1] = tile2;
+        }
+
+        if (j < testGrid[i].length - 1) {
+          const tile1 = testGrid[i][j];
+          const tile2 = testGrid[i][j + 1];
+
+          testGrid[i][j] = tile2;
+          testGrid[i][j + 1] = tile1;
+
+          if (this.getMatches(testGrid).length > 0) {
+            return true;
+          }
+
+          testGrid[i][j] = tile1;
+          testGrid[i][j + 1] = tile2;
+        }
+
+        if (i > 0) {
+          const tile1 = testGrid[i][j];
+          const tile2 = testGrid[i - 1][j];
+
+          testGrid[i][j] = tile2;
+          testGrid[i - 1][j] = tile1;
+
+          if (this.getMatches(testGrid).length > 0) {
+            return true;
+          }
+
+          testGrid[i][j] = tile1;
+          testGrid[i - 1][j] = tile2;
+        }
+
+        if (i < testGrid.length - 1) {
+          const tile1 = testGrid[i][j];
+          const tile2 = testGrid[i + 1][j];
+
+          testGrid[i][j] = tile2;
+          testGrid[i + 1][j] = tile1;
+
+          if (this.getMatches(testGrid).length > 0) {
+            return true;
+          }
+
+          testGrid[i][j] = tile1;
+          testGrid[i + 1][j] = tile2;
+        }
+      }
+    }
+
+    return false;
+  }
+
+  private removeTileGroup(matches) {
     for (const tempArr of matches) {
       for (const tile of tempArr) {
         const tilePos = this.getTilePos(this.tileGrid, tile);
+        this.matchParticles.emitParticleAt(tile.x, tile.y);
         this.tiles.remove(tile, true);
         this.incrementScore();
         if (tilePos.x !== -1 && tilePos.y !== -1) {
@@ -363,17 +490,45 @@ export class MainScene extends Phaser.Scene {
     }
   }
 
-  incrementScore() {
+  private incrementScore() {
     this.gameInstanceService.score += 10;
+    this.checkLevelChange();
+  }
+
+  private checkLevelChange() {
     if (this.gameInstanceService.score > 0 && this.gameInstanceService.score % this.gameInstanceService.levelChangeScore === 0) {
       this.gameInstanceService.level++;
       if (this.gameInstanceService.currentActiveTileTypes < this.tileTypes.length) {
         this.gameInstanceService.currentActiveTileTypes++;
       }
+
+      const levelText = this.add.text(this.game.scale.gameSize.width / 2, this.game.scale.gameSize.height / 2, `Level ${this.gameInstanceService.level}`,
+        {
+          fontSize: '32px',
+          stroke: '#000000',
+          strokeThickness: 5
+        }).setOrigin(0.5).setDepth(1);
+
+      this.tweens.add({
+        targets: levelText,
+        scaleX: 1,
+        scaleY: 1,
+        angle: 360,
+        _ease: 'Sine.easeInOut',
+        ease: 'Power2',
+        duration: 1000,
+        delay: 50
+      });
+
+      this.time.addEvent({
+        delay: 2000, callback: () => {
+          levelText.destroy(true);
+        }
+      });
     }
   }
 
-  getTilePos(tileGrid, tile) {
+  private getTilePos(tileGrid, tile) {
     const pos = { x: -1, y: -1 };
 
     for (let i = 0; i < tileGrid.length; i++) {
@@ -389,7 +544,7 @@ export class MainScene extends Phaser.Scene {
     return pos;
   }
 
-  resetTile() {
+  private resetTile() {
     // tslint:disable-next-line: prefer-for-of
     for (let i = 0; i < this.tileGrid.length; i++) {
       for (let j = this.tileGrid[i].length - 1; j > 0; j--) {
@@ -413,7 +568,7 @@ export class MainScene extends Phaser.Scene {
     }
   }
 
-  fillTile() {
+  private fillTile() {
     for (let i = 0; i < this.tileGrid.length; i++) {
       for (let j = 0; j < this.tileGrid.length; j++) {
         if (this.tileGrid[i][j] == null) {
