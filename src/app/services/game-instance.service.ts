@@ -90,4 +90,8 @@ export class GameInstanceService {
     GameServices.showLeaderboard({ leaderboardId });
   }
 
+  public unlockAchievement(id: string) {
+    GameServices.unlockAchievement({ achievementId: id });
+  }
+
 }

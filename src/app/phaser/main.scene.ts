@@ -5,8 +5,23 @@ import { skip, debounceTime } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { Capacitor } from '@capacitor/core';
 
+type ScoreAchievement = {
+  score: number;
+  locked: boolean;
+  id: string; // TODO: if can't match ids, have google and apple that check platform
+};
+type ScoreAchievements = ScoreAchievement[];
+const scoreAchievements: ScoreAchievements = [
+  {
+    id: 'CgkIzPzc8d4XEAIQAw',
+    locked: true,
+    score: 2000,
+  }
+];
+
 export class MainScene extends Phaser.Scene {
   static KEY = 'main-scene';
+
 
   tileGrid = [
     [null, null, null, null, null, null],
@@ -504,7 +519,19 @@ export class MainScene extends Phaser.Scene {
 
   private incrementScore() {
     this.gameInstanceService.score += 10;
+    this.checkScoreAchievements(this.gameInstanceService.score);
     this.checkLevelChange();
+  }
+  private checkScoreAchievements(scoreCheck: number) {
+    scoreAchievements
+      .filter(scoreAchievement => {
+        return scoreAchievement.score <= scoreCheck && scoreAchievement.locked;
+      })
+      .forEach(scoreAchievement => {
+        this.gameInstanceService.unlockAchievement(scoreAchievement.id);
+        scoreAchievement.locked = false;
+      });
+    return;
   }
 
   private checkLevelChange() {
