@@ -1,0 +1,398 @@
+{
+    "frames": [
+        {
+            "filename": "moose",
+            "frame": {
+                "w": 277,
+                "h": 170,
+                "x": 0,
+                "y": 0
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.6
+            }
+        },
+        {
+            "filename": "goat",
+            "frame": {
+                "w": 192,
+                "h": 179,
+                "x": 0,
+                "y": 170
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "buffalo",
+            "frame": {
+                "w": 191,
+                "h": 160,
+                "x": 277,
+                "y": 0
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.47
+            }
+        },
+        {
+            "filename": "elephant",
+            "frame": {
+                "w": 191,
+                "h": 162,
+                "x": 277,
+                "y": 160
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.42
+            }
+        },
+        {
+            "filename": "rabbit",
+            "frame": {
+                "w": 137,
+                "h": 184,
+                "x": 0,
+                "y": 349
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.63
+            }
+        },
+        {
+            "filename": "monkey",
+            "frame": {
+                "w": 182,
+                "h": 136,
+                "x": 137,
+                "y": 349
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "panda",
+            "frame": {
+                "w": 182,
+                "h": 136,
+                "x": 468,
+                "y": 0
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "giraffe",
+            "frame": {
+                "w": 162,
+                "h": 170,
+                "x": 468,
+                "y": 136
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.6
+            }
+        },
+        {
+            "filename": "dog",
+            "frame": {
+                "w": 137,
+                "h": 165,
+                "x": 468,
+                "y": 306
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.59
+            }
+        },
+        {
+            "filename": "narwhal",
+            "frame": {
+                "w": 146,
+                "h": 163,
+                "x": 319,
+                "y": 322
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.57
+            }
+        },
+        {
+            "filename": "bear",
+            "frame": {
+                "w": 162,
+                "h": 140,
+                "x": 0,
+                "y": 533
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.51
+            }
+        },
+        {
+            "filename": "hippo",
+            "frame": {
+                "w": 162,
+                "h": 136,
+                "x": 465,
+                "y": 471
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "rhino",
+            "frame": {
+                "w": 162,
+                "h": 136,
+                "x": 162,
+                "y": 485
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "whale",
+            "frame": {
+                "w": 146,
+                "h": 162,
+                "x": 650,
+                "y": 0
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.58
+            }
+        },
+        {
+            "filename": "chicken",
+            "frame": {
+                "w": 136,
+                "h": 153,
+                "x": 324,
+                "y": 485
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.55
+            }
+        },
+        {
+            "filename": "cow",
+            "frame": {
+                "w": 153,
+                "h": 136,
+                "x": 630,
+                "y": 162
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "frog",
+            "frame": {
+                "w": 138,
+                "h": 152,
+                "x": 605,
+                "y": 306
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.55
+            }
+        },
+        {
+            "filename": "pig",
+            "frame": {
+                "w": 152,
+                "h": 136,
+                "x": 627,
+                "y": 458
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "snake",
+            "frame": {
+                "w": 136,
+                "h": 150,
+                "x": 0,
+                "y": 673
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.45
+            }
+        },
+        {
+            "filename": "zebra",
+            "frame": {
+                "w": 136,
+                "h": 149,
+                "x": 136,
+                "y": 673
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.54
+            }
+        },
+        {
+            "filename": "horse",
+            "frame": {
+                "w": 137,
+                "h": 149,
+                "x": 627,
+                "y": 594
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.54
+            }
+        },
+        {
+            "filename": "penguin",
+            "frame": {
+                "w": 148,
+                "h": 136,
+                "x": 460,
+                "y": 607
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "walrus",
+            "frame": {
+                "w": 136,
+                "h": 146,
+                "x": 272,
+                "y": 638
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.47
+            }
+        },
+        {
+            "filename": "chick",
+            "frame": {
+                "w": 137,
+                "h": 136,
+                "x": 796,
+                "y": 0
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "crocodile",
+            "frame": {
+                "w": 137,
+                "h": 136,
+                "x": 796,
+                "y": 136
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "duck",
+            "frame": {
+                "w": 137,
+                "h": 136,
+                "x": 783,
+                "y": 272
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "gorilla",
+            "frame": {
+                "w": 137,
+                "h": 136,
+                "x": 779,
+                "y": 408
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "parrot",
+            "frame": {
+                "w": 137,
+                "h": 136,
+                "x": 779,
+                "y": 544
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "sloth",
+            "frame": {
+                "w": 137,
+                "h": 136,
+                "x": 764,
+                "y": 680
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "owl",
+            "frame": {
+                "w": 136,
+                "h": 136,
+                "x": 0,
+                "y": 823
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        }
+    ],
+    "meta": {
+        "description": "Atlas generado con Atlas Packer Gamma V2",
+        "web": "https://gammafp.github.io/atlas-packer-phaser/"
+    }
+}

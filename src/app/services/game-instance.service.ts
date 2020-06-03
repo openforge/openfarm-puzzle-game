@@ -4,11 +4,15 @@ import { MainScene } from '../phaser/main.scene';
 import { VibrationService } from './vibration.service';
 import { Plugins } from '@capacitor/core';
 import { BehaviorSubject } from 'rxjs';
+import '@openforge/capacitor-game-services';
+import { GameServicesPlugin } from '@openforge/capacitor-game-services';
 
 const { Motion } = Plugins;
+const GameServices = Plugins.GameServices as GameServicesPlugin;
 
 @Injectable({ providedIn: 'root' })
 export class GameInstanceService {
+  private readonly leaderboardId = 'CgkIzPzc8d4XEAIQAQ';
 
   public gameInstance: any;
   score = 0;
@@ -57,16 +61,33 @@ export class GameInstanceService {
       });
       this.gameInstance.gameInstanceService = this;
       this.gameInstance.vibrationSvc = this.vibrationSvc;
+      GameServices.signIn();
     }
   }
 
   restart() {
+    this.submitScore();
     this.score = 0;
     this.level = 1;
     this.currentActiveTileTypes = 4;
     this.bombPowerUps = 3;
     const game = this.gameInstance as Phaser.Game;
     game.scene.getScene(MainScene.KEY).scene.restart();
+  }
+
+  public submitScore(): void {
+    const { leaderboardId, score } = this;
+    if (score === 0) {
+      console.warn('cannot submit score of 0, make sure to call this method before resetting the score property');
+      return;
+    }
+    GameServices.submitScore({ leaderboardId, score, });
+    return;
+  }
+
+  public showLeaderboard(): void {
+    const { leaderboardId } = this;
+    GameServices.showLeaderboard({ leaderboardId });
   }
 
 }

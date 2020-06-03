@@ -1,0 +1,22 @@
+{
+  "name": "OpenforgeCapacitorGameServices",
+  "version": "1.0.0",
+  "summary": "A native only plugin for googles play services library and apples game center library",
+  "license": "MIT",
+  "homepage": "https://github.com/openforge/capacitor-game-services",
+  "authors": "OpenForge",
+  "source": {
+    "git": "https://github.com/openforge/capacitor-game-services",
+    "tag": "1.0.0"
+  },
+  "source_files": "ios/Plugin/**/*.{swift,h,m,c,cc,mm,cpp}",
+  "platforms": {
+    "ios": "11.0"
+  },
+  "dependencies": {
+    "Capacitor": [
+
+    ]
+  },
+  "static_framework": true
+}

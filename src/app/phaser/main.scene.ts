@@ -93,14 +93,14 @@ export class MainScene extends Phaser.Scene {
 
     this.matchParticles = this.add.particles('match-particle');
     this.matchParticles.createEmitter({
-        angle: { min: 240, max: 300 },
-        speed: { min: 400, max: 600 },
-        quantity: { min: 20, max: 50 },
-        lifespan: 1000,
-        alpha: { start: 1, end: 0 },
-        scale: this.assetScale,
-        gravityY: 800,
-        on: false
+      angle: { min: 240, max: 300 },
+      speed: { min: 400, max: 600 },
+      quantity: { min: 20, max: 50 },
+      lifespan: 1000,
+      alpha: { start: 1, end: 0 },
+      scale: this.assetScale,
+      gravityY: 800,
+      on: false
     });
 
     this.getPowerups();
@@ -287,25 +287,33 @@ export class MainScene extends Phaser.Scene {
     }
   }
 
-  private checkGameOver() {
-    if (this.gameInstanceService.bombPowerUps === 0 && !this.checkSwapPossible()) {
-      const levelText = this.add.text(this.game.scale.gameSize.width / 2, this.game.scale.gameSize.height / 2, 'Game Over \nNo more moves',
-      {
-        align: 'center',
-        fontSize: '32px',
-        stroke: '#000000',
-        strokeThickness: 5
-      }).setOrigin(0.5).setDepth(1);
+  private checkGameOver(): boolean {
+    const outOfBombs: boolean = this.gameInstanceService.bombPowerUps === 0;
+    const outOfMoves: boolean = !this.checkSwapPossible();
+
+    if (outOfBombs && outOfMoves) {
+      this.gameInstanceService.submitScore();
+
+      const levelText = this.add
+        .text(this.game.scale.gameSize.width / 2, this.game.scale.gameSize.height / 2, 'Game Over \nNo more moves',
+          {
+            align: 'center',
+            fontSize: '32px',
+            stroke: '#000000',
+            strokeThickness: 5
+          })
+        .setOrigin(0.5)
+        .setDepth(1);
 
       this.tweens.add({
-          targets: levelText,
-          scaleX: 1,
-          scaleY: 1,
-          angle: 360,
-          _ease: 'Sine.easeInOut',
-          ease: 'Power2',
-          duration: 1000,
-          delay: 50
+        targets: levelText,
+        scaleX: 1,
+        scaleY: 1,
+        angle: 360,
+        _ease: 'Sine.easeInOut',
+        ease: 'Power2',
+        duration: 1000,
+        delay: 50
       });
       return true;
     }
@@ -329,9 +337,11 @@ export class MainScene extends Phaser.Scene {
     let groups = [];
     // Check for horizontal matches
     let i = 0;
+    let j = 0;
+
     for (const tempArr of grid) {
       groups = [];
-      for (let j = 0; j < tempArr.length; j++) {
+      for (j = 0; j < tempArr.length; j++) {
         if (j < tempArr.length - 2) {
           if (grid[i][j] && grid[i][j + 1] && grid[i][j + 2]) {
             if (grid[i][j].tileType === grid[i][j + 1].tileType &&
@@ -362,8 +372,10 @@ export class MainScene extends Phaser.Scene {
       i++;
     }
 
+    i = 0;
+    j = 0;
+
     // Check for vertical matches
-    let j = 0;
     for (const tempArr of grid) {
       groups = [];
       for (i = 0; i < tempArr.length; i++) {
@@ -503,21 +515,21 @@ export class MainScene extends Phaser.Scene {
       }
 
       const levelText = this.add.text(this.game.scale.gameSize.width / 2, this.game.scale.gameSize.height / 2, `Level ${this.gameInstanceService.level}`,
-      {
-        fontSize: '32px',
-        stroke: '#000000',
-        strokeThickness: 5
-      }).setOrigin(0.5).setDepth(1);
+        {
+          fontSize: '32px',
+          stroke: '#000000',
+          strokeThickness: 5
+        }).setOrigin(0.5).setDepth(1);
 
       this.tweens.add({
-          targets: levelText,
-          scaleX: 1,
-          scaleY: 1,
-          angle: 360,
-          _ease: 'Sine.easeInOut',
-          ease: 'Power2',
-          duration: 1000,
-          delay: 50
+        targets: levelText,
+        scaleX: 1,
+        scaleY: 1,
+        angle: 360,
+        _ease: 'Sine.easeInOut',
+        ease: 'Power2',
+        duration: 1000,
+        delay: 50
       });
 
       this.time.addEvent({
