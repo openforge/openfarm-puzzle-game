@@ -144,6 +144,7 @@ export class MainScene extends Phaser.Scene {
 
   private getPowerups() {
     this.bombs.forEach(bomb => bomb.destroy());
+    this.bombs = [];
     const bombs = (this.gameInstanceService as any).bombPowerUps;
     for (let i = 0; i < bombs; i++) {
       const bomb = this.add.image(i * this.tileWidth + this.tileWidth / 2, this.yOffset - this.tileHeight / 2, 'bomb')
@@ -314,7 +315,9 @@ export class MainScene extends Phaser.Scene {
 
   private clearTiles() {
     const vibrationSvc = (this.gameInstanceService as any).vibrationSvc as VibrationService;
-    vibrationSvc.vibrate();
+    if (Capacitor.platform !== 'web') {
+      vibrationSvc.vibrate();
+    }
     this.removeTileGroup(this.tileGrid);
     this.fillTile();
   }
