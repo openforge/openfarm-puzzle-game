@@ -125,17 +125,32 @@ export class MainScene extends Phaser.Scene {
       const hoverX = this.game.input.activePointer.x;
       const hoverY = this.game.input.activePointer.y;
 
+      const startPosX = Math.floor(this.activeTile1.x / this.tileWidth);
+      const startPosY = Math.floor((this.activeTile1.y - this.yOffset) / this.tileHeight);
+
       const hoverPosX = Math.floor(hoverX / this.tileWidth);
       const hoverPosY = Math.floor((hoverY - this.yOffset) / this.tileHeight);
 
-      const difX = (hoverPosX - this.startPosX);
-      const difY = (hoverPosY - this.startPosY);
+      let difX = (hoverPosX - this.startPosX);
+      let difY = (hoverPosY - this.startPosY);
+
+      if (difX > 0 && difX !== 0) {
+        difX = 1;
+      }
+      if (difX < 0 && difX !== 0) {
+        difX = -1;
+      }
+      if (difY > 0 && difY !== 0) {
+        difY = 1;
+      }
+      if (difY < 0 && difY !== 0) {
+        difY = -1;
+      }
 
       if (!(hoverPosY > this.tileGrid[0].length - 1 || hoverPosY < 0) && !(hoverPosX > this.tileGrid.length - 1 || hoverPosX < 0)) {
-
-        if ((Math.abs(difY) === 1 && difX === 0) || (Math.abs(difX) === 1 && difY === 0)) {
+        if ((Math.abs(difY) >= 1 && difX === 0) || (Math.abs(difX) >= 1 && difY === 0)) {
           this.canMove = false;
-          this.activeTile2 = this.tileGrid[hoverPosX][hoverPosY];
+          this.activeTile2 = this.tileGrid[startPosX + difX][startPosY + difY];
           this.swapTiles();
           this.time.addEvent({ delay: 500, callback: () => this.checkMatch() });
         }
@@ -146,6 +161,7 @@ export class MainScene extends Phaser.Scene {
 
   private getPowerups() {
     this.bombs.forEach(bomb => bomb.destroy());
+    this.bombs = [];
     const bombs = (this.gameInstanceService as any).bombPowerUps;
     for (let i = 0; i < bombs; i++) {
       const bomb = this.add.image(i * this.tileWidth + this.tileWidth / 2, this.yOffset - this.tileHeight / 2, 'bomb')
@@ -157,9 +173,11 @@ export class MainScene extends Phaser.Scene {
 
   triggerBomb() {
     if (this.gameInstanceService.bombPowerUps > 0) {
+      this.canMove = false;
       this.gameInstanceService.decreasePowerup();
       this.bombs[this.gameInstanceService.bombPowerUps].destroy(true);
       this.clearTiles();
+      this.time.addEvent({ delay: 500, callback: () => this.checkMatch() });
     }
   }
 
@@ -324,7 +342,9 @@ export class MainScene extends Phaser.Scene {
 
   private clearTiles() {
     const vibrationSvc = (this.gameInstanceService as any).vibrationSvc as VibrationService;
-    vibrationSvc.vibrate();
+    if (Capacitor.platform !== 'web') {
+      vibrationSvc.vibrate();
+    }
     this.removeTileGroup(this.tileGrid);
     this.fillTile();
   }
