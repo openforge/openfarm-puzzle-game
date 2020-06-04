@@ -155,9 +155,11 @@ export class MainScene extends Phaser.Scene {
 
   triggerBomb() {
     if (this.gameInstanceService.bombPowerUps > 0) {
+      this.canMove = false;
       this.gameInstanceService.decreasePowerup();
       this.bombs[this.gameInstanceService.bombPowerUps].destroy(true);
       this.clearTiles();
+      this.time.addEvent({ delay: 500, callback: () => this.checkMatch() });
     }
   }
 
