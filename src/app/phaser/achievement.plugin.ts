@@ -4,8 +4,21 @@ import '@openforge/capacitor-game-services';
 import { GameServicesPlugin } from '@openforge/capacitor-game-services';
 const GameServices = Plugins.GameServices as GameServicesPlugin;
 
-export const gameServicesConstants = {
+type ScoreAchievementState = {
+  locked: boolean;
+  achievementId: string;
+  score: number;
+};
+
+export const gameServicesConstants: {
+  defaultLeaderboard: { leaderboardId: string },
+  scoreAchievements: Pick<ScoreAchievementState, 'achievementId' | 'score'>[];
+} = {
   scoreAchievements: [
+    {
+      achievementId: 'CgkIzPzc8d4XEAIQCQ',
+      score: 1_000,
+    },
     {
       achievementId: 'CgkIzPzc8d4XEAIQAw',
       score: 2_000,
@@ -37,7 +50,7 @@ export const gameServicesConstants = {
   },
 
 
-} as const;
+};
 
 export class AchievementsPlugin extends Phaser.Plugins.BasePlugin {
   private scoreAchievementsState = gameServicesConstants.scoreAchievements
@@ -60,12 +73,6 @@ export const AchievementsGlobalPlugin: Phaser.Types.Plugins.GlobalPlugin = {
   active: true,
   mapping: 'achievements',
 } as const;
-
-type ScoreAchievementState = {
-  locked: boolean;
-  achievementId: string;
-  score: number;
-};
 
 const allowLockedAndReachedScores =
   (scoreToCheck: number) =>
