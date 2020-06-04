@@ -6,6 +6,7 @@ import { Plugins } from '@capacitor/core';
 import { BehaviorSubject } from 'rxjs';
 import '@openforge/capacitor-game-services';
 import { GameServicesPlugin } from '@openforge/capacitor-game-services';
+import { AchievementsGlobalPlugin } from '../phaser/achievement.plugin';
 
 const { Motion } = Plugins;
 const GameServices = Plugins.GameServices as GameServicesPlugin;
@@ -43,6 +44,11 @@ export class GameInstanceService {
   init() {
     if (!this.gameInstance) {
       this.gameInstance = new Phaser.Game({
+        plugins: {
+          global: [
+            AchievementsGlobalPlugin,
+          ]
+        },
         width: window.innerWidth,
         height: window.innerHeight,
         type: Phaser.AUTO,
@@ -88,10 +94,6 @@ export class GameInstanceService {
   public showLeaderboard(): void {
     const { leaderboardId } = this;
     GameServices.showLeaderboard({ leaderboardId });
-  }
-
-  public unlockAchievement(id: string) {
-    GameServices.unlockAchievement({ achievementId: id });
   }
 
 }
