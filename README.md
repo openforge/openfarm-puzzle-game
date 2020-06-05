@@ -15,7 +15,6 @@ Build for android
 ionic capacitor build android
 ```
 
-Copy the AndroidManifest.xml on the root directory to replace the one in android/app/src/main/AndroidManifest.xml in order to have the required permissions for vibrate.
 Run from Android Studio
 
 Build for ios
