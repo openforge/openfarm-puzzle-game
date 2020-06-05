@@ -49,6 +49,8 @@
 
     <!-- Permissions -->
 
+    <!-- Haptics https://capacitor.ionicframework.com/docs/apis/haptics/ -->
+    <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <!-- Camera, Photos, input file -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
