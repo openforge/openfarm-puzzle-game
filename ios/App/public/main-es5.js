@@ -544,7 +544,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
   /***/
   function _(module, exports, __webpack_require__) {
     module.exports = __webpack_require__(
-    /*! /Users/harryscheuerle/Desktop/ionic-phaser-example/src/main.ts */
+    /*! /Users/luisk/Documents/Webjunto/ionic-phaser-example/src/main.ts */
     "./src/main.ts");
     /***/
   }
