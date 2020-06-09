@@ -22,6 +22,11 @@
 - [Angular](https://angular.io/)
 - [Phaser](https://phaser.io/)
 
+## Plugins
+The app uses the following Capacitor APIs:
+- Haptics: https://capacitor.ionicframework.com/docs/apis/haptics/
+- Motion: https://capacitor.ionicframework.com/docs/apis/motion/
+
 ## Build Process
 
 Build for android
