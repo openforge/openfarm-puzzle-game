@@ -4,9 +4,11 @@ import { VibrationService } from '../services/vibration.service';
 import { skip, debounceTime } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { Capacitor } from '@capacitor/core';
+import { AchievementsPlugin } from './achievement.plugin';
 
 export class MainScene extends Phaser.Scene {
   static KEY = 'main-scene';
+  private achievements: AchievementsPlugin;
 
   tileGrid = [
     [null, null, null, null, null, null],
@@ -524,6 +526,7 @@ export class MainScene extends Phaser.Scene {
 
   private incrementScore() {
     this.gameInstanceService.score += 10;
+    this.achievements.checkScoreAchievementsState(this.gameInstanceService.score);
     this.checkLevelChange();
   }
 
