@@ -83,12 +83,12 @@ export class MainScene extends Phaser.Scene {
 
   preload() {
     this.load.atlas('animals', 'assets/animals.png', 'assets/animals_atlas.json');
-    this.load.image('back-fence', 'assets/back_fence.svg');
-    this.load.image('feed', 'assets/feed.svg');
-    this.load.image('feedbox', 'assets/feedbox.svg');
-    this.load.image('front-fence', 'assets/front_fence.svg');
-    this.load.image('refresh-sign', 'assets/refresh_sign.svg');
-    this.load.image('title', 'assets/title_level_score.svg');
+    this.load.svg('back-fence', 'assets/back_fence.svg', { scale: 1 });
+    this.load.svg('feed', 'assets/feed.svg', { scale: 1 });
+    this.load.svg('feedbox', 'assets/feedbox.svg', { scale: 1 });
+    this.load.svg('front-fence', 'assets/front_fence.svg', { scale: 1 });
+    this.load.svg('refresh-sign', 'assets/refresh_sign.svg', { scale: 1 });
+    this.load.svg('title', 'assets/title_level_score.svg', { scale: 1 });
     this.load.image('match-particle', 'assets/white_particle.png');
   }
 
@@ -115,41 +115,43 @@ export class MainScene extends Phaser.Scene {
 
     this.add.rectangle(0, 0, this.game.scale.gameSize.width, this.yOffset - this.tileHeight, 0x9ef1ff).setOrigin(0);
     const title = this.add.image(this.game.scale.gameSize.width / 2, 0, 'title').setOrigin(0.5, 0)
-    .setScale(this.game.scale.gameSize.width / 300)
+    .setScale(this.game.scale.gameSize.width / 515)
     .setDepth(1);
 
     this.scoreText = this.add
-    .text(64 * (this.game.scale.gameSize.width / 300), 97 * (this.game.scale.gameSize.width / 300), 'Score: 0',
+    .text(111 * (this.game.scale.gameSize.width / 515), 168 * (this.game.scale.gameSize.width / 515), 'Score: 0',
       {
         align: 'center',
-        fontSize: '14px',
+        fontSize: '26px',
         stroke: '#000000',
         strokeThickness: 1
       })
     .setOrigin(0.5)
-    .setScale(this.game.scale.gameSize.width / 300)
+    .setScale(this.game.scale.gameSize.width / 515)
     .setDepth(2);
 
     this.levelText = this.add
-    .text(236 * (this.game.scale.gameSize.width / 300), 97 * (this.game.scale.gameSize.width / 300), 'Level: 1',
+    .text(407 * (this.game.scale.gameSize.width / 515), 168 * (this.game.scale.gameSize.width / 515), 'Level: 1',
       {
         align: 'center',
-        fontSize: '14px',
+        fontSize: '26px',
         stroke: '#000000',
         strokeThickness: 1
       })
     .setOrigin(0.5)
-    .setScale(this.game.scale.gameSize.width / 300)
+    .setScale(this.game.scale.gameSize.width / 515)
     .setDepth(2);
 
 
-    this.add.image(0, this.yOffset - this.tileHeight / 2, 'back-fence').setOrigin(0).setScale(this.game.scale.gameSize.width / 300);
+    this.add.image(0, this.yOffset - this.tileHeight / 2, 'back-fence').setOrigin(0).setScale(this.game.scale.gameSize.width / 1021);
     this.add.image(0, this.yOffset + this.tileHeight * 6, 'front-fence')
-    .setOrigin(0).setScale(this.game.scale.gameSize.width / 300);
-    this.feedbox = this.add.image(0, this.game.scale.gameSize.height - 5, 'feedbox').setOrigin(0, 1).setScale(this.assetScale * 1.7);
+    .setOrigin(0).setScale(this.game.scale.gameSize.width / 1021);
+
+    this.feedbox = this.add.image(0, this.game.scale.gameSize.height - 5, 'feedbox')
+    .setOrigin(0, 1).setScale((this.game.scale.gameSize.width / 6) / 199 * 1.7);
 
     const restartSign = this.add.image(this.game.scale.gameSize.width - 5, this.game.scale.gameSize.height, 'refresh-sign')
-    .setOrigin(1).setScale(this.assetScale * 2).setInteractive();
+    .setOrigin(1).setScale((this.game.scale.gameSize.width / 6) / 224 * 2).setInteractive();
     restartSign.on('pointerdown', () => this.gameInstanceService.restart());
 
     this.getPowerups();
@@ -211,7 +213,7 @@ export class MainScene extends Phaser.Scene {
     this.bombs = [];
     const bombs = (this.gameInstanceService as any).bombPowerUps;
     for (let i = 0; i < bombs; i++) {
-      const bomb = this.add.image(i * this.tileWidth * 1.5 / 2 + this.tileWidth * 1.5 / 4,
+      const bomb = this.add.image(i * this.tileWidth * 1.5 / 2 + this.tileWidth * 1.5 / 3,
         this.game.scale.height - 5 - this.feedbox.height * this.feedbox.scale / 2, 'feed')
         .setScale(this.assetScale * 1.5).setOrigin(0.5).setInteractive();
       (bomb as Phaser.GameObjects.Sprite).on('pointerdown', () => this.triggerBomb());
