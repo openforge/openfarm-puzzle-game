@@ -73,6 +73,9 @@ export class MainScene extends Phaser.Scene {
 
   gameInstanceService: GameInstanceService;
   matchParticles: Phaser.GameObjects.Particles.ParticleEmitterManager;
+  feedbox: Phaser.GameObjects.Image;
+  scoreText: Phaser.GameObjects.Text;
+  levelText: Phaser.GameObjects.Text;
 
   constructor() {
     super({ key: MainScene.KEY });
@@ -80,13 +83,18 @@ export class MainScene extends Phaser.Scene {
 
   preload() {
     this.load.atlas('animals', 'assets/animals.png', 'assets/animals_atlas.json');
-    this.load.image('bomb', 'assets/bomb.png');
+    this.load.image('back-fence', 'assets/back_fence.svg');
+    this.load.image('feed', 'assets/feed.svg');
+    this.load.image('feedbox', 'assets/feedbox.svg');
+    this.load.image('front-fence', 'assets/front_fence.svg');
+    this.load.image('refresh-sign', 'assets/refresh_sign.svg');
+    this.load.image('title', 'assets/title_level_score.svg');
     this.load.image('match-particle', 'assets/white_particle.png');
   }
 
   create() {
     this.gameInstanceService = (this.scene.scene.game as any).gameInstanceService;
-    this.cameras.main.setBackgroundColor('#34495f');
+    this.cameras.main.setBackgroundColor('#49a139');
 
     this.tileWidth = this.game.scale.gameSize.width / 6;
     this.tileHeight = this.game.scale.gameSize.width / 6;
@@ -104,6 +112,45 @@ export class MainScene extends Phaser.Scene {
       gravityY: 800,
       on: false
     });
+
+    this.add.rectangle(0, 0, this.game.scale.gameSize.width, this.yOffset - this.tileHeight, 0x9ef1ff).setOrigin(0);
+    const title = this.add.image(this.game.scale.gameSize.width / 2, 0, 'title').setOrigin(0.5, 0)
+    .setScale(this.game.scale.gameSize.width / 300)
+    .setDepth(1);
+
+    this.scoreText = this.add
+    .text(64 * (this.game.scale.gameSize.width / 300), 97 * (this.game.scale.gameSize.width / 300), 'Score: 0',
+      {
+        align: 'center',
+        fontSize: '12px',
+        stroke: '#000000',
+        strokeThickness: 5
+      })
+    .setOrigin(0.5)
+    .setScale(this.game.scale.gameSize.width / 300)
+    .setDepth(2);
+
+    this.levelText = this.add
+    .text(236 * (this.game.scale.gameSize.width / 300), 97 * (this.game.scale.gameSize.width / 300), 'Level: 1',
+      {
+        align: 'center',
+        fontSize: '12px',
+        stroke: '#000000',
+        strokeThickness: 5
+      })
+    .setOrigin(0.5)
+    .setScale(this.game.scale.gameSize.width / 300)
+    .setDepth(2);
+
+
+    this.add.image(0, this.yOffset - this.tileHeight / 2, 'back-fence').setOrigin(0).setScale(this.game.scale.gameSize.width / 300);
+    this.add.image(0, this.yOffset + this.tileHeight * 6, 'front-fence')
+    .setOrigin(0).setScale(this.game.scale.gameSize.width / 300);
+    this.feedbox = this.add.image(0, this.game.scale.gameSize.height - 5, 'feedbox').setOrigin(0, 1).setScale(this.assetScale * 1.7);
+
+    const restartSign = this.add.image(this.game.scale.gameSize.width - 5, this.game.scale.gameSize.height, 'refresh-sign')
+    .setOrigin(1).setScale(this.assetScale * 2).setInteractive();
+    restartSign.on('pointerdown', () => this.gameInstanceService.restart());
 
     this.getPowerups();
 
@@ -164,15 +211,16 @@ export class MainScene extends Phaser.Scene {
     this.bombs = [];
     const bombs = (this.gameInstanceService as any).bombPowerUps;
     for (let i = 0; i < bombs; i++) {
-      const bomb = this.add.image(i * this.tileWidth + this.tileWidth / 2, this.yOffset - this.tileHeight / 2, 'bomb')
-        .setScale(this.assetScale).setOrigin(0.5).setInteractive();
+      const bomb = this.add.image(i * this.tileWidth * 1.5 / 2 + this.tileWidth * 1.5 / 4,
+        this.game.scale.height - 5 - this.feedbox.height * this.feedbox.scale / 2, 'feed')
+        .setScale(this.assetScale * 1.5).setOrigin(0.5).setInteractive();
       (bomb as Phaser.GameObjects.Sprite).on('pointerdown', () => this.triggerBomb());
       this.bombs.push(bomb);
     }
   }
 
   triggerBomb() {
-    if (this.gameInstanceService.bombPowerUps > 0) {
+    if (this.canMove && this.gameInstanceService.bombPowerUps > 0) {
       this.canMove = false;
       this.gameInstanceService.decreasePowerup();
       this.bombs[this.gameInstanceService.bombPowerUps].destroy(true);
@@ -526,6 +574,7 @@ export class MainScene extends Phaser.Scene {
 
   private incrementScore() {
     this.gameInstanceService.score += 10;
+    this.scoreText.setText(`Score: ${this.gameInstanceService.score}`);
     this.achievements.checkScoreAchievementsState(this.gameInstanceService.score);
     this.checkLevelChange();
   }
@@ -560,6 +609,8 @@ export class MainScene extends Phaser.Scene {
           levelText.destroy(true);
         }
       });
+
+      this.levelText.setText(`Level ${this.gameInstanceService.level}`);
     }
   }
 
