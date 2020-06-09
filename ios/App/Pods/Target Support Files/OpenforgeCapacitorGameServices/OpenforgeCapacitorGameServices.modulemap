@@ -1,0 +1,6 @@
+framework module OpenforgeCapacitorGameServices {
+  umbrella header "OpenforgeCapacitorGameServices-umbrella.h"
+
+  export *
+  module * { export * }
+}

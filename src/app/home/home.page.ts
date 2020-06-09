@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { GameInstanceService } from '../services/game-instance.service';
 
 @Component({
   selector: 'app-home',
@@ -7,6 +8,8 @@ import { Component } from '@angular/core';
 })
 export class HomePage {
 
-  constructor() {}
+  constructor(public gameInstanceService: GameInstanceService) {
+    this.gameInstanceService.init();
+  }
 
 }
