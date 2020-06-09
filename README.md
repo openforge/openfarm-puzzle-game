@@ -24,8 +24,9 @@
 
 ## Plugins
 The app uses the following Capacitor APIs:
-- Haptics: https://capacitor.ionicframework.com/docs/apis/haptics/
-- Motion: https://capacitor.ionicframework.com/docs/apis/motion/
+- [Haptics](https://capacitor.ionicframework.com/docs/apis/haptics/)
+- [Motion](https://capacitor.ionicframework.com/docs/apis/motion/)
+- [Game Services](https://github.com/openforge/capacitor-game-services)
 
 ## Build Process
 
