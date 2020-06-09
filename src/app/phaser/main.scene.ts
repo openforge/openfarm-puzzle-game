@@ -122,9 +122,9 @@ export class MainScene extends Phaser.Scene {
     .text(64 * (this.game.scale.gameSize.width / 300), 97 * (this.game.scale.gameSize.width / 300), 'Score: 0',
       {
         align: 'center',
-        fontSize: '12px',
+        fontSize: '14px',
         stroke: '#000000',
-        strokeThickness: 5
+        strokeThickness: 1
       })
     .setOrigin(0.5)
     .setScale(this.game.scale.gameSize.width / 300)
@@ -134,9 +134,9 @@ export class MainScene extends Phaser.Scene {
     .text(236 * (this.game.scale.gameSize.width / 300), 97 * (this.game.scale.gameSize.width / 300), 'Level: 1',
       {
         align: 'center',
-        fontSize: '12px',
+        fontSize: '14px',
         stroke: '#000000',
-        strokeThickness: 5
+        strokeThickness: 1
       })
     .setOrigin(0.5)
     .setScale(this.game.scale.gameSize.width / 300)
