@@ -17,3 +17,10 @@ section.score-section {
   }
 
 }
+
+div#game-wrapper {
+  padding-top: env(safe-area-inset-top);
+  background-color: #9ef1ff;
+  height: 100vh;
+  width: 100vw;
+}
