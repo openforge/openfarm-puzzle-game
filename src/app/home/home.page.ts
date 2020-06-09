@@ -8,7 +8,11 @@ import { GameInstanceService } from '../services/game-instance.service';
 })
 export class HomePage {
 
-  constructor(public gameInstanceService: GameInstanceService) {
+  constructor(
+    public gameInstanceService: GameInstanceService,
+  ) { }
+
+  ionViewDidEnter(): void {
     this.gameInstanceService.init();
   }
 
