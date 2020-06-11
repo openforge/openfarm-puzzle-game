@@ -115,43 +115,50 @@ export class MainScene extends Phaser.Scene {
 
     this.add.rectangle(0, 0, this.game.scale.gameSize.width, this.yOffset - this.tileHeight, 0x9ef1ff).setOrigin(0);
     const title = this.add.image(this.game.scale.gameSize.width / 2, 0, 'title').setOrigin(0.5, 0)
-    .setScale(this.game.scale.gameSize.width / 515)
-    .setDepth(1);
+      .setScale(this.game.scale.gameSize.width / 515)
+      .setDepth(1);
 
     this.scoreText = this.add
-    .text(111 * (this.game.scale.gameSize.width / 515), 168 * (this.game.scale.gameSize.width / 515), 'Score: 0',
-      {
-        align: 'center',
-        fontSize: '26px',
-        stroke: '#000000',
-        strokeThickness: 1
-      })
-    .setOrigin(0.5)
-    .setScale(this.game.scale.gameSize.width / 515)
-    .setDepth(2);
+      .text(
+        111 * (this.game.scale.gameSize.width / 515),
+        168 * (this.game.scale.gameSize.width / 515),
+        'Score: 0',
+        {
+          align: 'center',
+          fontSize: '26px',
+          stroke: '#000000',
+          strokeThickness: 1
+        })
+      .setOrigin(0.5)
+      .setScale(this.game.scale.gameSize.width / 515)
+      .setDepth(2)
+      .setInteractive()
+      .on('pointerdown', () => {
+        this.gameInstanceService.showLeaderboard();
+      });
 
     this.levelText = this.add
-    .text(407 * (this.game.scale.gameSize.width / 515), 168 * (this.game.scale.gameSize.width / 515), 'Level: 1',
-      {
-        align: 'center',
-        fontSize: '26px',
-        stroke: '#000000',
-        strokeThickness: 1
-      })
-    .setOrigin(0.5)
-    .setScale(this.game.scale.gameSize.width / 515)
-    .setDepth(2);
+      .text(407 * (this.game.scale.gameSize.width / 515), 168 * (this.game.scale.gameSize.width / 515), 'Level: 1',
+        {
+          align: 'center',
+          fontSize: '26px',
+          stroke: '#000000',
+          strokeThickness: 1
+        })
+      .setOrigin(0.5)
+      .setScale(this.game.scale.gameSize.width / 515)
+      .setDepth(2);
 
 
     this.add.image(0, this.yOffset - this.tileHeight / 2, 'back-fence').setOrigin(0).setScale(this.game.scale.gameSize.width / 1021);
     this.add.image(0, this.yOffset + this.tileHeight * 6, 'front-fence')
-    .setOrigin(0).setScale(this.game.scale.gameSize.width / 1021);
+      .setOrigin(0).setScale(this.game.scale.gameSize.width / 1021);
 
     this.feedbox = this.add.image(0, this.game.scale.gameSize.height - 5, 'feedbox')
-    .setOrigin(0, 1).setScale((this.game.scale.gameSize.width / 6) / 199 * 1.7);
+      .setOrigin(0, 1).setScale((this.game.scale.gameSize.width / 6) / 199 * 1.7);
 
     const restartSign = this.add.image(this.game.scale.gameSize.width - 5, this.game.scale.gameSize.height, 'refresh-sign')
-    .setOrigin(1).setScale((this.game.scale.gameSize.width / 6) / 224 * 2).setInteractive();
+      .setOrigin(1).setScale((this.game.scale.gameSize.width / 6) / 224 * 2).setInteractive();
     restartSign.on('pointerdown', () => this.gameInstanceService.restart());
 
     this.getPowerups();
