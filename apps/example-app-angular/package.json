@@ -1,0 +1,15 @@
+{
+    "name": "example-app-angular",
+    "version": "0.0.0",
+    "license": "MIT",
+    "private": true,
+    "dependencies": {
+        "@capacitor/android": "4.7.0",
+        "@capacitor/core": "^4.7.0",
+        "@capacitor/ios": "4.7.0",
+        "@openforge/capacitor-game-services": "file:../../../capacitor-game-services"
+    },
+    "devDependencies": {
+        "@capacitor/cli": "^4.7.0"
+    }
+}
