@@ -1,24 +1,45 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "baseUrl": "./",
-    "outDir": "./dist/out-tsc",
+    "rootDir": ".",
     "sourceMap": true,
     "declaration": false,
-    "downlevelIteration": true,
-    "experimentalDecorators": true,
-    "module": "esnext",
     "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
     "importHelpers": true,
     "target": "es2015",
+    "module": "esnext",
     "lib": [
-      "es2018",
-      "dom",
-      "scripthost"
-    ]
+      "es2017",
+      "dom"
+    ],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@openforge/example-app-angular/ionic/ui-buttons": [
+        "libs/example-app-angular/ionic/ui-buttons/src/index.ts"
+      ],
+      "@openforge/example-app-angular/ionic/ui-headers": [
+        "libs/example-app-angular/ionic/ui-headers/src/index.ts"
+      ],
+      "@openforge/example-app-angular/ionic/ui-modals": [
+        "libs/example-app-angular/ionic/ui-modals/src/index.ts"
+      ],
+      "@openforge/example-app-angular/phaser/singleton": [
+        "libs/example-app-angular/phaser/singleton/src/index.ts"
+      ],
+      "@openforge/example-app-angular/phaser/ui-modals": [
+        "libs/example-app-angular/phaser/ui-modals/src/index.ts"
+      ],
+      "@openforge/shared/data-access-model": [
+        "libs/shared/data-access-model/src/index.ts"
+      ]
+    }
   },
-  "angularCompilerOptions": {
-    "fullTemplateTypeCheck": true,
-    "strictInjectionParameters": true
-  }
+  "exclude": [
+    "node_modules",
+    "tmp"
+  ]
 }
