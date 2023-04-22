@@ -1,0 +1,25 @@
+{
+    "compileOnSave": false,
+    "compilerOptions": {
+        "rootDir": ".",
+        "sourceMap": true,
+        "declaration": false,
+        "moduleResolution": "node",
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "importHelpers": true,
+        "target": "es2015",
+        "module": "esnext",
+        "lib": ["es2017", "dom"],
+        "skipLibCheck": true,
+        "skipDefaultLibCheck": true,
+        "baseUrl": ".",
+        "paths": {
+            "@openforge/example-app-angular/ionic/ui-modals": ["libs/example-app-angular/ionic/ui-modals/src/index.ts"],
+            "@openforge/example-app-angular/phaser/ui-modals": ["libs/example-app-angular/phaser/ui-modals/src/index.ts"],
+            "@openforge/shared-phaser-singleton": ["libs/shared/phaser-singleton/src/index.ts"],
+            "@openforge/shared/data-access-model": ["libs/shared/data-access-model/src/index.ts"]
+        }
+    },
+    "exclude": ["node_modules", "tmp"]
+}

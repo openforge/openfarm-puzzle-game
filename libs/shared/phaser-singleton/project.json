@@ -1,0 +1,24 @@
+{
+    "name": "shared-phaser-singleton",
+    "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+    "projectType": "library",
+    "sourceRoot": "libs/shared/phaser-singleton/src",
+    "prefix": "openforge",
+    "targets": {
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": ["{workspaceRoot}/coverage/libs/shared/phaser-singleton"],
+            "options": {
+                "jestConfig": "libs/shared/phaser-singleton/jest.config.ts",
+                "passWithNoTests": true
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "options": {
+                "lintFilePatterns": ["libs/shared/phaser-singleton/src/**/*.ts", "libs/shared/phaser-singleton/src/**/*.html"]
+            }
+        }
+    },
+    "tags": []
+}

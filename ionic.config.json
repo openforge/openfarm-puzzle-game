@@ -1,7 +1,13 @@
 {
-  "name": "ionic-phaser-example",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "angular"
+  "defaultProject": "example-app-angular",
+  "projects": {
+    "example-app-angular": {
+      "name": "example-app-angular",
+      "integrations": {
+        "capacitor": {}
+      },
+      "type": "angular",
+      "root": "apps/example-app-angular"
+    }
+  }
 }
