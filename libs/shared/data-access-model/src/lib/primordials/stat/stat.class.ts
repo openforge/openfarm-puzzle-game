@@ -9,12 +9,18 @@ import { BaseStat } from './stat.base.class';
  * * Since it is a subclass of BaseStat, _baseValue is it's starting value
  */
 export class Stat extends BaseStat {
+    protected _finalValue: number;
     private _rawBonuses = new Set<RawBonus>();
     private _finalBonuses = new Set<FinalBonus>();
-    protected _finalValue: number;
 
     constructor(value: number) {
         super(value);
+    }
+    /**
+     * * Returns the calculated Final Value
+     */
+    public get finalValue() {
+        return this.calculateValue();
     }
 
     protected addRawBonus(_bonus: RawBonus) {
@@ -74,12 +80,5 @@ export class Stat extends BaseStat {
 
         this._finalValue += finalBonusValue;
         this._finalValue *= 1 + finalBonusMultiplier;
-    }
-
-    /**
-     * * Returns the calculated Final Value
-     */
-    public get finalValue() {
-        return this.calculateValue();
     }
 }

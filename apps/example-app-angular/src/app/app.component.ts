@@ -18,7 +18,10 @@ export class AppComponent implements OnDestroy {
     public warriors: Warrior[] = []; // * Array of Warriors since they don't currently have a graphic associated
 
     // * for our app template to use the actions History)
-    constructor(public phaserInstance: PhaserSingletonService, public modalController: ModalController) {
+    constructor(
+        public phaserInstance: PhaserSingletonService,
+        public modalController: ModalController
+    ) {
         this.actionsHistoryRef = PhaserSingletonService.actionsHistory;
     }
 

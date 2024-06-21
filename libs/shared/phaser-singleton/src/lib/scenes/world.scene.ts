@@ -16,13 +16,6 @@ import { ScrollManager } from '../utilities/scroll-manager';
 
 export class WorldScene extends Phaser.Scene {
     static KEY = 'preloader';
-    private backgroundKey = 'background-image'; // * Store the background image name
-    private backgroundImageAsset = 'assets/blacksmith/blacksmith_bg.png'; // * Asset url relative to the app itself
-    private backgroundImage: Phaser.GameObjects.Image; // * Reference for the background image
-    private scrollManager: ScrollManager; // * Custom openforge utility for handling scroll
-
-    private achievements: AchievementsPlugin;
-
     tileGrid = [
         [null, null, null, null, null, null],
         [null, null, null, null, null, null],
@@ -85,10 +78,16 @@ export class WorldScene extends Phaser.Scene {
     random: Phaser.Math.RandomDataGenerator;
 
     gameInstanceService: GameInstanceService;
-    matchParticles: Phaser.GameObjects.Particles.ParticleEmitterManager;
+    matchParticles: Phaser.GameObjects.Particles.ParticleEmitter;
     feedbox: Phaser.GameObjects.Image;
     scoreText: Phaser.GameObjects.Text;
     levelText: Phaser.GameObjects.Text;
+    private backgroundKey = 'background-image'; // * Store the background image name
+    private backgroundImageAsset = 'assets/blacksmith/blacksmith_bg.png'; // * Asset url relative to the app itself
+    private backgroundImage: Phaser.GameObjects.Image; // * Reference for the background image
+    private scrollManager: ScrollManager; // * Custom openforge utility for handling scroll
+
+    private achievements: AchievementsPlugin;
 
     constructor() {
         super({ key: WorldScene.KEY });
@@ -115,6 +114,8 @@ export class WorldScene extends Phaser.Scene {
      * * Phaser will only call create after all assets in Preload have been loaded
      */
     create() {
+        // Disable eslint
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         this.gameInstanceService = (this.scene.scene.game as any).gameInstanceService;
         this.cameras.main.setBackgroundColor('#49a139');
 
@@ -123,17 +124,18 @@ export class WorldScene extends Phaser.Scene {
         this.yOffset = this.game.scale.gameSize.height / 4;
         this.assetScale = (this.tileWidth - 10) / this.assetTileSize;
 
-        this.matchParticles = this.add.particles('match-particle');
-        this.matchParticles.createEmitter({
-            angle: { min: 240, max: 300 },
-            speed: { min: 400, max: 600 },
-            quantity: { min: 20, max: 50 },
-            lifespan: 1000,
-            alpha: { start: 1, end: 0 },
-            scale: this.assetScale,
-            gravityY: 800,
-            on: false,
-        });
+        this.matchParticles = this.add.particles(0);
+        // Migrate to newest version
+        // this.matchParticles.createEmitter({
+        //     angle: { min: 240, max: 300 },
+        //     speed: { min: 400, max: 600 },
+        //     quantity: { min: 20, max: 50 },
+        //     lifespan: 1000,
+        //     alpha: { start: 1, end: 0 },
+        //     scale: this.assetScale,
+        //     gravityY: 800,
+        //     on: false,
+        // });
 
         this.add.rectangle(0, 0, this.game.scale.gameSize.width, this.yOffset - this.tileHeight, 0x9ef1ff).setOrigin(0);
 
@@ -248,7 +250,7 @@ export class WorldScene extends Phaser.Scene {
         }
     }
 
-    triggerBomb() {
+    private triggerBomb() {
         if (this.canMove && this.gameInstanceService.bombPowerUps > 0) {
             this.canMove = false;
             this.gameInstanceService.decreasePowerup();
@@ -302,6 +304,7 @@ export class WorldScene extends Phaser.Scene {
     }
 
     private tileDown(tile: Phaser.GameObjects.Sprite) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const vibrationService = (this.gameInstanceService as any).vibrationService as VibrationService;
         if (Capacitor.getPlatform() !== 'web') {
             void vibrationService.giveHapticFeedback();
@@ -359,6 +362,7 @@ export class WorldScene extends Phaser.Scene {
     }
 
     private checkMatch() {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const vibrationService = (this.gameInstanceService as any).vibrationService as VibrationService;
         const matches = this.getMatches(this.tileGrid);
         if (matches.length > 0) {
@@ -415,6 +419,7 @@ export class WorldScene extends Phaser.Scene {
     }
 
     private clearTiles() {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const vibrationService = (this.gameInstanceService as any).vibrationService as VibrationService;
         if (Capacitor.getPlatform() !== 'web') {
             void vibrationService.vibrate();
@@ -661,7 +666,7 @@ export class WorldScene extends Phaser.Scene {
         // tslint:disable-next-line: prefer-for-of
         for (let i = 0; i < this.tileGrid.length; i++) {
             for (let j = this.tileGrid[i].length - 1; j > 0; j--) {
-                if (this.tileGrid[i][j] == null && this.tileGrid[i][j - 1] != null) {
+                if (this.tileGrid[i][j] === null && this.tileGrid[i][j - 1] !== null) {
                     const tempTile = this.tileGrid[i][j - 1];
                     this.tileGrid[i][j] = tempTile;
                     this.tileGrid[i][j - 1] = null;
@@ -684,7 +689,7 @@ export class WorldScene extends Phaser.Scene {
     private fillTile() {
         for (let i = 0; i < this.tileGrid.length; i++) {
             for (let j = 0; j < this.tileGrid.length; j++) {
-                if (this.tileGrid[i][j] == null) {
+                if (this.tileGrid[i][j] === null) {
                     const tile = this.addTile(i, j);
                     this.tileGrid[i][j] = tile;
                 }
