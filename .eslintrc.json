@@ -16,7 +16,7 @@
             }
         }
     },
-    "ignorePatterns": ["node_modules/**"],
+    "ignorePatterns": ["node_modules/**", ".nx/**", "jest.preset.js", "test.ts"],
     "overrides": [
         {
             "files": ["*.ts"],
@@ -24,15 +24,12 @@
                 "eslint:recommended",
                 "plugin:@angular-eslint/recommended",
                 "plugin:@angular-eslint/template/process-inline-templates",
-                "plugin:@angular-eslint/ng-cli-compat",
-                "plugin:@angular-eslint/ng-cli-compat--formatting-add-on",
                 "plugin:@typescript-eslint/recommended",
                 "plugin:@typescript-eslint/recommended-requiring-type-checking",
                 "plugin:import/recommended",
                 "plugin:import/typescript",
                 "plugin:prettier/recommended",
-                "prettier",
-                "plugin:@angular-eslint/recommended--extra"
+                "prettier"
             ],
             "rules": {
                 "import/no-unresolved": "off",
@@ -45,10 +42,7 @@
                 ],
                 "@typescript-eslint/unbound-method": "off",
                 "@typescript-eslint/restrict-plus-operands": [
-                    "error",
-                    {
-                        "checkCompoundAssignments": true
-                    }
+                    "error"
                 ],
                 "@typescript-eslint/restrict-template-expressions": "off",
                 "@typescript-eslint/no-floating-promises": [
@@ -158,10 +152,6 @@
         {
             "files": ["*.js"],
             "parser": "babel-eslint"
-        },
-        {
-            "files": ["*.html"],
-            "extends": ["plugin:@angular-eslint/template/recommended", "plugin:@nrwl/nx/angular-template"]
         },
         {
             "files": ["*.tsx"],

@@ -12,7 +12,10 @@ import { PhaserSingletonService } from '@openforge/shared-phaser-singleton';
 })
 export class ShopPageComponent implements OnInit {
     public isModal: boolean = false; // * Property to catch if component is on the modal or not
-    constructor(private router: Router, private modalController: ModalController) {}
+    constructor(
+        private router: Router,
+        private modalController: ModalController
+    ) {}
 
     ngOnInit(): void {
         console.log('ShopPageComponent ngOnInit');

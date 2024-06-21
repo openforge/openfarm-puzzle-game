@@ -18,11 +18,14 @@ import { WorldScene } from './scenes/world.scene';
 export class PhaserSingletonService {
     // * We need the Phaser.Game to live inside our own class because extending Phaser.Game would require a super call
     public static activeGame: Phaser.Game;
-    private static ngZone: NgZone;
     public static actionsHistory: string[] = []; // * Since phaser is a singleton, let's store the history of actions here for all components.
     public static shopObservable: Subject<SwordTypeEnum> = new Subject<SwordTypeEnum>();
+    private static ngZone: NgZone;
 
-    constructor(private _ngZone: NgZone, @Optional() @SkipSelf() parentModule?: PhaserSingletonService) {
+    constructor(
+        private _ngZone: NgZone,
+        @Optional() @SkipSelf() parentModule?: PhaserSingletonService
+    ) {
         if (parentModule) {
             console.error('Phaser Singleton is already loaded. Import it in the AppModule only');
         } else {

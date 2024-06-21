@@ -16,15 +16,14 @@ import { VibrationService } from './vibration.service';
     providedIn: 'root',
 })
 export class GameInstanceService {
-    private readonly leaderboardId = 'CgkIzPzc8d4XEAIQAQ';
-
-    public gameInstance: any;
     score = 0;
     level = 1;
     levelChangeScore = 1000;
     currentActiveTileTypes = 4;
     bombPowerUps = 3;
     powerUpEmitter$: BehaviorSubject<void> = new BehaviorSubject(null);
+    public gameInstance: any;
+    private readonly leaderboardId = 'CgkIzPzc8d4XEAIQAQ';
 
     constructor(private vibrationService: VibrationService) {
         void Motion.addListener('accel', ({ acceleration: { x, y, z } }) => {

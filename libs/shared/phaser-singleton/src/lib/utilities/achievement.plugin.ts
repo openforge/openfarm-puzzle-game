@@ -50,19 +50,17 @@ export const gameServicesConstants: {
 export class AchievementsPlugin extends Phaser.Plugins.BasePlugin {
     private scoreAchievementsState = gameServicesConstants.scoreAchievements.map(achievementData => ({ ...achievementData, locked: true }));
 
-    private unlockScoreAchievement = () => (scoreAchievement: ScoreAchievementState) => {
-        const { achievementId } = scoreAchievement;
-        void GameServices.unlockAchievement({ achievementId });
-        scoreAchievement.locked = false;
-    };
-
+    public constructor(pluginManager: Phaser.Plugins.PluginManager) {
+        super(pluginManager);
+    }
     public checkScoreAchievementsState(scoreToCheck: number) {
         this.scoreAchievementsState.filter(allowLockedAndReachedScores(scoreToCheck)).forEach(this.unlockScoreAchievement());
     }
-
-    constructor(pluginManager: Phaser.Plugins.PluginManager) {
-        super(pluginManager);
-    }
+    private unlockScoreAchievement = () => (scoreAchievement: ScoreAchievementState) => {
+        const { achievementId } = scoreAchievement;
+        void GameServices.unlockAchievement({ achievementID: achievementId });
+        scoreAchievement.locked = false;
+    };
 }
 
 export const AchievementsGlobalPlugin: Phaser.Types.Plugins.GlobalPlugin = {

@@ -20,6 +20,9 @@ export class BaseStat {
         this._baseValue = _value;
         this._baseMultiplier = _multiplier || 0;
     }
+    public get baseMultiplier() {
+        return this._baseMultiplier;
+    }
 
     public get baseValue() {
         return this._baseValue;
@@ -27,10 +30,6 @@ export class BaseStat {
 
     public set baseValue(_baseValue) {
         this._baseValue = _baseValue;
-    }
-
-    public get baseMultiplier() {
-        return this._baseMultiplier;
     }
 
     public set baseMultiplier(_baseMultiplier) {

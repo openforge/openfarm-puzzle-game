@@ -1,0 +1,1202 @@
+{
+  "version": "6.0",
+  "nxVersion": "19.3.0",
+  "deps": {
+    "@angular/animations": "18.0.4",
+    "@angular/common": "18.0.4",
+    "@angular/compiler": "18.0.4",
+    "@angular/core": "18.0.4",
+    "@angular/forms": "18.0.4",
+    "@angular/platform-browser": "18.0.4",
+    "@angular/platform-browser-dynamic": "18.0.4",
+    "@angular/router": "18.0.4",
+    "@capacitor/app": "^6.0.0",
+    "@capacitor/core": "^6.1.0",
+    "@capacitor/haptics": "^6.0.0",
+    "@capacitor/keyboard": "^6.0.1",
+    "@capacitor/motion": "^6.0.0",
+    "@capacitor/status-bar": "^6.0.0",
+    "@ionic/angular": "^8.2.2",
+    "@nx/eslint": "19.3.0",
+    "@openforge/capacitor-game-services": "^1.1.2",
+    "@schematics/angular": "18.0.4",
+    "@types/cypress": "^1.1.3",
+    "@vitest/ui": "^1.6.0",
+    "babel-eslint": "^10.1.0",
+    "eslint-plugin-jsdoc": "^48.2.12",
+    "eslint-plugin-prefer-arrow": "^1.2.3",
+    "eslint-plugin-simple-import-sort": "^12.1.0",
+    "husky": "^9.0.11",
+    "license-checker": "^25.0.1",
+    "lint-staged": "^15.2.7",
+    "phaser": "^3.55.2",
+    "rxjs": "7.8.1",
+    "ts-lib": "^0.0.5",
+    "tslib": "^2.6.3",
+    "vitest": "^1.6.0",
+    "zone.js": "0.14.7",
+    "@angular-devkit/build-angular": "18.0.5",
+    "@angular-devkit/core": "18.0.5",
+    "@angular-devkit/schematics": "18.0.5",
+    "@angular-eslint/eslint-plugin": "18.0.1",
+    "@angular-eslint/eslint-plugin-template": "18.0.1",
+    "@angular-eslint/template-parser": "18.0.1",
+    "@angular/compiler-cli": "18.0.4",
+    "@angular/language-service": "18.0.4",
+    "@capacitor/cli": "^6.1.0",
+    "@ionic/angular-toolkit": "^11.0.1",
+    "@nx/angular": "19.3.0",
+    "@nx/cypress": "19.3.0",
+    "@nx/eslint-plugin": "^19.3.0",
+    "@nx/jest": "19.3.0",
+    "@nx/vite": "19.3.0",
+    "@nx/workspace": "19.3.0",
+    "@types/jest": "^29.5.12",
+    "@types/node": "^20.14.7",
+    "@typescript-eslint/eslint-plugin": "^7.13.1",
+    "@typescript-eslint/parser": "^7.13.1",
+    "@typescript-eslint/utils": "^8.0.0-alpha.28",
+    "@vitest/coverage-v8": "^1.6.0",
+    "cypress": "^13.12.0",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "9.1.0",
+    "eslint-import-resolver-typescript": "^3.6.1",
+    "eslint-plugin-cypress": "^3.3.0",
+    "eslint-plugin-html": "^8.1.1",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-jsx-a11y": "^6.9.0",
+    "eslint-plugin-prettier": "^5.1.3",
+    "jest": "29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
+    "jest-preset-angular": "^14.1.1",
+    "jsdom": "^24.1.0",
+    "nx": "^19.3.0",
+    "nx-stylelint": "^17.1.5",
+    "prettier": "^3.3.2",
+    "prettier-eslint": "^16.3.0",
+    "sass": "^1.77.6",
+    "stylelint": "^16.6.1",
+    "stylelint-config-prettier": "^8.0.0",
+    "stylelint-config-standard": "^36.0.1",
+    "stylelint-config-standard-scss": "^13.1.0",
+    "ts-jest": "29.1.5",
+    "ts-node": "^10.9.2",
+    "typescript": "5.4.5",
+    "vite": "^5.3.1",
+    "vite-plugin-eslint": "^1.8.1",
+    "vite-tsconfig-paths": "4.3.2"
+  },
+  "pathMappings": {
+    "@openforge/example-app-angular/ionic/ui-modals": [
+      "libs/example-app-angular/ionic/ui-modals/src/index.ts"
+    ],
+    "@openforge/example-app-angular/phaser/ui-modals": [
+      "libs/example-app-angular/phaser/ui-modals/src/index.ts"
+    ],
+    "@openforge/shared-phaser-singleton": [
+      "libs/shared/phaser-singleton/src/index.ts"
+    ],
+    "@openforge/shared/data-access-model": [
+      "libs/shared/data-access-model/src/index.ts"
+    ]
+  },
+  "nxJsonPlugins": [],
+  "fileMap": {
+    "nonProjectFiles": [
+      {
+        "file": "pull_request_template.md",
+        "hash": "15034318482760000911"
+      },
+      {
+        "file": "nx.json",
+        "hash": "2192383321860243733"
+      },
+      {
+        "file": ".github/workflows/codeql-analysis.yml",
+        "hash": "8122270584675033627"
+      },
+      {
+        "file": "jest.preset.js",
+        "hash": "8809642419570472871"
+      },
+      {
+        "file": ".vscode/settings.json",
+        "hash": "16081060330165682324"
+      },
+      {
+        "file": ".gitignore",
+        "hash": "16302022778709442608"
+      },
+      {
+        "file": ".husky/pre-push",
+        "hash": "2747788963738932550"
+      },
+      {
+        "file": ".husky/pre-commit",
+        "hash": "409396958200320491"
+      },
+      {
+        "file": "apps/.gitkeep",
+        "hash": "3244421341483603138"
+      },
+      {
+        "file": "tsconfig.json",
+        "hash": "7112453592791600434"
+      },
+      {
+        "file": ".eslintrc.json",
+        "hash": "8484994789065761418"
+      },
+      {
+        "file": ".prettierignore",
+        "hash": "15506099751605829756"
+      },
+      {
+        "file": "tools/tsconfig.tools.json",
+        "hash": "113529236189617652"
+      },
+      {
+        "file": "tsconfig.base.json",
+        "hash": "16344463702327007586"
+      },
+      {
+        "file": "jest.config.ts",
+        "hash": "1584000200128824852"
+      },
+      {
+        "file": ".prettierrc.json",
+        "hash": "149444767181236645"
+      },
+      {
+        "file": "libs/.gitkeep",
+        "hash": "3244421341483603138"
+      },
+      {
+        "file": "migrations.json",
+        "hash": "15583571098597991808"
+      },
+      {
+        "file": "package-lock.json",
+        "hash": "3476066336447214940"
+      },
+      {
+        "file": "package.json",
+        "hash": "3179983425137237548"
+      },
+      {
+        "file": ".vscode/extensions.json",
+        "hash": "8069221157229639643"
+      },
+      {
+        "file": "ionic.config.json",
+        "hash": "11072883446507040012"
+      },
+      {
+        "file": "README.md",
+        "hash": "1950589117749920672"
+      },
+      {
+        "file": "LICENSE",
+        "hash": "12476272592599247422"
+      },
+      {
+        "file": ".lintstagedrc",
+        "hash": "1063193021670399906"
+      }
+    ],
+    "projectFileMap": {
+      "example-app-angular": [
+        {
+          "file": "apps/example-app-angular/.eslintrc.json",
+          "hash": "9166220688762294708"
+        },
+        {
+          "file": "apps/example-app-angular/.stylelintrc.json",
+          "hash": "3999711824073606296"
+        },
+        {
+          "file": "apps/example-app-angular/android/.gitignore",
+          "hash": "16088808965373471785"
+        },
+        {
+          "file": "apps/example-app-angular/android/app/.gitignore",
+          "hash": "3800628318224317187"
+        },
+        {
+          "file": "apps/example-app-angular/android/app/build.gradle",
+          "hash": "15206709499346147715"
+        },
+        {
+          "file": "apps/example-app-angular/android/app/capacitor.build.gradle",
+          "hash": "16174403690860691411"
+        },
+        {
+          "file": "apps/example-app-angular/android/app/proguard-rules.pro",
+          "hash": "16319704539319765030"
+        },
+        {
+          "file": "apps/example-app-angular/android/app/src/androidTest/java/com/getcapacitor/myapp/ExampleInstrumentedTest.java",
+          "hash": "1280125089554780403"
+        },
+        {
+          "file": "apps/example-app-angular/android/app/src/main/AndroidManifest.xml",
+          "hash": "2938668929049486912"
+        },
+        {
+          "file": "apps/example-app-angular/android/app/src/main/java/angular/ionicphaser/openforge/io/MainActivity.java",
+          "hash": "8147006025558520543"
+        },
+        {
+          "file": "apps/example-app-angular/android/app/src/main/res/drawable-land-hdpi/splash.png",
+          "hash": "12618218220193540786"
+        },
+        {
+          "file": "apps/example-app-angular/android/app/src/main/res/drawable-land-mdpi/splash.png",
+          "hash": "13354102016025079206"
+        },
+        {
+          "file": "apps/example-app-angular/android/app/src/main/res/drawable-land-xhdpi/splash.png",
+          "hash": "16928120350772912315"
+        },
+        {
+          "file": "apps/example-app-angular/android/app/src/main/res/drawable-land-xxhdpi/splash.png",
+          "hash": "8114284271146720243"
+        },
+        {
+          "file": "apps/example-app-angular/android/app/src/main/res/drawable-land-xxxhdpi/splash.png",
+          "hash": "10648225290896133372"
+        },
+        {
+          "file": "apps/example-app-angular/android/app/src/main/res/drawable-port-hdpi/splash.png",
+          "hash": "7870574596552345396"
+        },
+        {
+          "file": "apps/example-app-angular/android/app/src/main/res/drawable-port-mdpi/splash.png",
+          "hash": "512985810174291431"
+        },
+        {
+          "file": "apps/example-app-angular/android/app/src/main/res/drawable-port-xhdpi/splash.png",
+          "hash": "13168839858812363171"
+        },
+        {
+          "file": "apps/example-app-angular/android/app/src/main/res/drawable-port-xxhdpi/splash.png",
+          "hash": "1546567578093946022"
+        },
+        {
+          "file": "apps/example-app-angular/android/app/src/main/res/drawable-port-xxxhdpi/splash.png",
+          "hash": "7224188242308859997"
+        },
+        {
+          "file": "apps/example-app-angular/android/app/src/main/res/drawable-v24/ic_launcher_foreground.xml",
+          "hash": "16602625396055746895"
+        },
+        {
+          "file": "apps/example-app-angular/android/app/src/main/res/drawable/ic_launcher_background.xml",
+          "hash": "4055909962711590499"
+        },
+        {
+          "file": "apps/example-app-angular/android/app/src/main/res/drawable/splash.png",
+          "hash": "13354102016025079206"
+        },
+        {
+          "file": "apps/example-app-angular/android/app/src/main/res/layout/activity_main.xml",
+          "hash": "13540211242698942768"
+        },
+        {
+          "file": "apps/example-app-angular/android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml",
+          "hash": "16176709064596667284"
+        },
+        {
+          "file": "apps/example-app-angular/android/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml",
+          "hash": "16176709064596667284"
+        },
+        {
+          "file": "apps/example-app-angular/android/app/src/main/res/mipmap-hdpi/ic_launcher.png",
+          "hash": "10700838889768688031"
+        },
+        {
+          "file": "apps/example-app-angular/android/app/src/main/res/mipmap-hdpi/ic_launcher_foreground.png",
+          "hash": "15163013499175324231"
+        },
+        {
+          "file": "apps/example-app-angular/android/app/src/main/res/mipmap-hdpi/ic_launcher_round.png",
+          "hash": "17762064175266230691"
+        },
+        {
+          "file": "apps/example-app-angular/android/app/src/main/res/mipmap-mdpi/ic_launcher.png",
+          "hash": "9342129704159603628"
+        },
+        {
+          "file": "apps/example-app-angular/android/app/src/main/res/mipmap-mdpi/ic_launcher_foreground.png",
+          "hash": "4133705743351324192"
+        },
+        {
+          "file": "apps/example-app-angular/android/app/src/main/res/mipmap-mdpi/ic_launcher_round.png",
+          "hash": "9039760806353812177"
+        },
+        {
+          "file": "apps/example-app-angular/android/app/src/main/res/mipmap-xhdpi/ic_launcher.png",
+          "hash": "15127275078370164788"
+        },
+        {
+          "file": "apps/example-app-angular/android/app/src/main/res/mipmap-xhdpi/ic_launcher_foreground.png",
+          "hash": "6222172872530160361"
+        },
+        {
+          "file": "apps/example-app-angular/android/app/src/main/res/mipmap-xhdpi/ic_launcher_round.png",
+          "hash": "16696879462706858720"
+        },
+        {
+          "file": "apps/example-app-angular/android/app/src/main/res/mipmap-xxhdpi/ic_launcher.png",
+          "hash": "5466540626246768150"
+        },
+        {
+          "file": "apps/example-app-angular/android/app/src/main/res/mipmap-xxhdpi/ic_launcher_foreground.png",
+          "hash": "6321943060948364586"
+        },
+        {
+          "file": "apps/example-app-angular/android/app/src/main/res/mipmap-xxhdpi/ic_launcher_round.png",
+          "hash": "14088589834205738071"
+        },
+        {
+          "file": "apps/example-app-angular/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png",
+          "hash": "18428292913404649045"
+        },
+        {
+          "file": "apps/example-app-angular/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher_foreground.png",
+          "hash": "11484431673195189447"
+        },
+        {
+          "file": "apps/example-app-angular/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png",
+          "hash": "1772322197088498798"
+        },
+        {
+          "file": "apps/example-app-angular/android/app/src/main/res/values/ic_launcher_background.xml",
+          "hash": "9482601953118464086"
+        },
+        {
+          "file": "apps/example-app-angular/android/app/src/main/res/values/strings.xml",
+          "hash": "12580008800396646598"
+        },
+        {
+          "file": "apps/example-app-angular/android/app/src/main/res/values/styles.xml",
+          "hash": "17918612613785874663"
+        },
+        {
+          "file": "apps/example-app-angular/android/app/src/main/res/xml/file_paths.xml",
+          "hash": "14753087816109454837"
+        },
+        {
+          "file": "apps/example-app-angular/android/app/src/test/java/com/getcapacitor/myapp/ExampleUnitTest.java",
+          "hash": "11856600006954306230"
+        },
+        {
+          "file": "apps/example-app-angular/android/build.gradle",
+          "hash": "1994283352288978122"
+        },
+        {
+          "file": "apps/example-app-angular/android/capacitor.settings.gradle",
+          "hash": "2925507622753479459"
+        },
+        {
+          "file": "apps/example-app-angular/android/gradle.properties",
+          "hash": "3700092993974969764"
+        },
+        {
+          "file": "apps/example-app-angular/android/gradle/wrapper/gradle-wrapper.jar",
+          "hash": "17111259880925534468"
+        },
+        {
+          "file": "apps/example-app-angular/android/gradle/wrapper/gradle-wrapper.properties",
+          "hash": "2251358327354396120"
+        },
+        {
+          "file": "apps/example-app-angular/android/gradlew",
+          "hash": "4004713095611155780"
+        },
+        {
+          "file": "apps/example-app-angular/android/gradlew.bat",
+          "hash": "410257071541801752"
+        },
+        {
+          "file": "apps/example-app-angular/android/settings.gradle",
+          "hash": "426215723856156424"
+        },
+        {
+          "file": "apps/example-app-angular/android/variables.gradle",
+          "hash": "3514101089225803680"
+        },
+        {
+          "file": "apps/example-app-angular/capacitor.config.ts",
+          "hash": "7904144746556340901",
+          "deps": [
+            "npm:@capacitor/cli"
+          ]
+        },
+        {
+          "file": "apps/example-app-angular/ios/.gitignore",
+          "hash": "8124190577866870027"
+        },
+        {
+          "file": "apps/example-app-angular/ios/App/App.xcodeproj/project.pbxproj",
+          "hash": "16821585844837543876"
+        },
+        {
+          "file": "apps/example-app-angular/ios/App/App.xcodeproj/project.xcworkspace/contents.xcworkspacedata",
+          "hash": "1121729896424732029"
+        },
+        {
+          "file": "apps/example-app-angular/ios/App/App.xcworkspace/contents.xcworkspacedata",
+          "hash": "5267424201368556030"
+        },
+        {
+          "file": "apps/example-app-angular/ios/App/App.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist",
+          "hash": "12722229457274558422"
+        },
+        {
+          "file": "apps/example-app-angular/ios/App/App/AppDelegate.swift",
+          "hash": "10885055232217572631"
+        },
+        {
+          "file": "apps/example-app-angular/ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-20x20@1x.png",
+          "hash": "12385444593802297008"
+        },
+        {
+          "file": "apps/example-app-angular/ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-20x20@2x-1.png",
+          "hash": "12429526847323540720"
+        },
+        {
+          "file": "apps/example-app-angular/ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-20x20@2x.png",
+          "hash": "12429526847323540720"
+        },
+        {
+          "file": "apps/example-app-angular/ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-20x20@3x.png",
+          "hash": "15152815085570688863"
+        },
+        {
+          "file": "apps/example-app-angular/ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-29x29@1x.png",
+          "hash": "2554253758524177271"
+        },
+        {
+          "file": "apps/example-app-angular/ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-29x29@2x-1.png",
+          "hash": "12198137245277410747"
+        },
+        {
+          "file": "apps/example-app-angular/ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-29x29@2x.png",
+          "hash": "12198137245277410747"
+        },
+        {
+          "file": "apps/example-app-angular/ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-29x29@3x.png",
+          "hash": "3318935767364370674"
+        },
+        {
+          "file": "apps/example-app-angular/ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-40x40@1x.png",
+          "hash": "12429526847323540720"
+        },
+        {
+          "file": "apps/example-app-angular/ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-40x40@2x-1.png",
+          "hash": "14932177463717412537"
+        },
+        {
+          "file": "apps/example-app-angular/ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-40x40@2x.png",
+          "hash": "14932177463717412537"
+        },
+        {
+          "file": "apps/example-app-angular/ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-40x40@3x.png",
+          "hash": "3684877619863183893"
+        },
+        {
+          "file": "apps/example-app-angular/ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-512@2x.png",
+          "hash": "15912141732076635821"
+        },
+        {
+          "file": "apps/example-app-angular/ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-60x60@2x.png",
+          "hash": "9268417310342489304"
+        },
+        {
+          "file": "apps/example-app-angular/ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-60x60@3x.png",
+          "hash": "8616519286775097401"
+        },
+        {
+          "file": "apps/example-app-angular/ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-76x76@1x.png",
+          "hash": "5736634351943338731"
+        },
+        {
+          "file": "apps/example-app-angular/ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-76x76@2x.png",
+          "hash": "3919751114099034118"
+        },
+        {
+          "file": "apps/example-app-angular/ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-83.5x83.5@2x.png",
+          "hash": "4184524914081726534"
+        },
+        {
+          "file": "apps/example-app-angular/ios/App/App/Assets.xcassets/AppIcon.appiconset/Contents.json",
+          "hash": "1801488482385899908"
+        },
+        {
+          "file": "apps/example-app-angular/ios/App/App/Assets.xcassets/Contents.json",
+          "hash": "5990803069847060607"
+        },
+        {
+          "file": "apps/example-app-angular/ios/App/App/Assets.xcassets/Splash.imageset/Contents.json",
+          "hash": "9385842541853943677"
+        },
+        {
+          "file": "apps/example-app-angular/ios/App/App/Assets.xcassets/Splash.imageset/splash-2732x2732-1.png",
+          "hash": "3237967808663258630"
+        },
+        {
+          "file": "apps/example-app-angular/ios/App/App/Assets.xcassets/Splash.imageset/splash-2732x2732-2.png",
+          "hash": "3237967808663258630"
+        },
+        {
+          "file": "apps/example-app-angular/ios/App/App/Assets.xcassets/Splash.imageset/splash-2732x2732.png",
+          "hash": "3237967808663258630"
+        },
+        {
+          "file": "apps/example-app-angular/ios/App/App/Base.lproj/LaunchScreen.storyboard",
+          "hash": "12402387980291643647"
+        },
+        {
+          "file": "apps/example-app-angular/ios/App/App/Base.lproj/Main.storyboard",
+          "hash": "14085817207643424634"
+        },
+        {
+          "file": "apps/example-app-angular/ios/App/App/Info.plist",
+          "hash": "12163224746781731064"
+        },
+        {
+          "file": "apps/example-app-angular/ios/App/Podfile",
+          "hash": "11772359836704379093"
+        },
+        {
+          "file": "apps/example-app-angular/jest.config.ts",
+          "hash": "9017671058764440835"
+        },
+        {
+          "file": "apps/example-app-angular/package-lock.json",
+          "hash": "4499754908661919562"
+        },
+        {
+          "file": "apps/example-app-angular/package.json",
+          "hash": "75135198554873899",
+          "deps": [
+            "npm:@capacitor/cli",
+            "npm:@capacitor/core",
+            "npm:@openforge/capacitor-game-services"
+          ]
+        },
+        {
+          "file": "apps/example-app-angular/project.json",
+          "hash": "17181332985224792759"
+        },
+        {
+          "file": "apps/example-app-angular/src/app/app-routing.module.ts",
+          "hash": "2155986900127085004",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@angular/router"
+          ]
+        },
+        {
+          "file": "apps/example-app-angular/src/app/app.component.html",
+          "hash": "6149073831810171120"
+        },
+        {
+          "file": "apps/example-app-angular/src/app/app.component.scss",
+          "hash": "390862123783980043"
+        },
+        {
+          "file": "apps/example-app-angular/src/app/app.component.spec.ts",
+          "hash": "4196076674483719163",
+          "deps": [
+            "npm:@angular/core"
+          ]
+        },
+        {
+          "file": "apps/example-app-angular/src/app/app.component.ts",
+          "hash": "15045574336166351241",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@ionic/angular",
+            "data-access-model",
+            "shared-phaser-singleton"
+          ]
+        },
+        {
+          "file": "apps/example-app-angular/src/app/app.module.ts",
+          "hash": "16113572928295527356",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@angular/platform-browser",
+            "npm:@angular/router",
+            "npm:@ionic/angular",
+            "shared-phaser-singleton"
+          ]
+        },
+        {
+          "file": "apps/example-app-angular/src/app/home/home.page.html",
+          "hash": "9388259709530726866"
+        },
+        {
+          "file": "apps/example-app-angular/src/app/home/home.page.scss",
+          "hash": "767930888542886192"
+        },
+        {
+          "file": "apps/example-app-angular/src/app/home/home.page.spec.ts",
+          "hash": "14569645281037241467",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@ionic/angular"
+          ]
+        },
+        {
+          "file": "apps/example-app-angular/src/app/home/home.page.ts",
+          "hash": "1423564465539684411",
+          "deps": [
+            "npm:@angular/core",
+            "data-access-model"
+          ]
+        },
+        {
+          "file": "apps/example-app-angular/src/app/pipes/reverse.pipe.ts",
+          "hash": "3052303830561646204",
+          "deps": [
+            "npm:@angular/core"
+          ]
+        },
+        {
+          "file": "apps/example-app-angular/src/app/shop/shop.component.html",
+          "hash": "15005880424206926914"
+        },
+        {
+          "file": "apps/example-app-angular/src/app/shop/shop.component.scss",
+          "hash": "8763116682952486583"
+        },
+        {
+          "file": "apps/example-app-angular/src/app/shop/shop.component.spec.ts",
+          "hash": "1547320965447489889",
+          "deps": [
+            "npm:@angular/core"
+          ]
+        },
+        {
+          "file": "apps/example-app-angular/src/app/shop/shop.component.ts",
+          "hash": "7605119457206986089",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@angular/router",
+            "npm:@ionic/angular",
+            "data-access-model",
+            "shared-phaser-singleton"
+          ]
+        },
+        {
+          "file": "apps/example-app-angular/src/assets/blacksmith/blacksmith_bg.png",
+          "hash": "959088879531115636"
+        },
+        {
+          "file": "apps/example-app-angular/src/assets/blacksmith/blacksmith_sprites.png",
+          "hash": "4035000743241207679"
+        },
+        {
+          "file": "apps/example-app-angular/src/assets/blacksmith/blacksmith_sprites_anim.json",
+          "hash": "13476354760663350789"
+        },
+        {
+          "file": "apps/example-app-angular/src/assets/blacksmith/blacksmith_sprites_atlas.json",
+          "hash": "15013606821883829240"
+        },
+        {
+          "file": "apps/example-app-angular/src/assets/fancy_sword.png",
+          "hash": "14474393231318689420"
+        },
+        {
+          "file": "apps/example-app-angular/src/assets/icon/favicon.png",
+          "hash": "17482944836898362639"
+        },
+        {
+          "file": "apps/example-app-angular/src/assets/puzzle-game/animals.png",
+          "hash": "2958715526401426921"
+        },
+        {
+          "file": "apps/example-app-angular/src/assets/puzzle-game/animals_atlas.json",
+          "hash": "10240431406835116904"
+        },
+        {
+          "file": "apps/example-app-angular/src/assets/puzzle-game/back_fence.svg",
+          "hash": "222016056986360451"
+        },
+        {
+          "file": "apps/example-app-angular/src/assets/puzzle-game/feed.svg",
+          "hash": "16995236236893129944"
+        },
+        {
+          "file": "apps/example-app-angular/src/assets/puzzle-game/feedbox.svg",
+          "hash": "16872038660984062939"
+        },
+        {
+          "file": "apps/example-app-angular/src/assets/puzzle-game/front_fence.svg",
+          "hash": "5503195717900279038"
+        },
+        {
+          "file": "apps/example-app-angular/src/assets/puzzle-game/option_cog.svg",
+          "hash": "17689676212322699215"
+        },
+        {
+          "file": "apps/example-app-angular/src/assets/puzzle-game/refresh_sign.svg",
+          "hash": "11230811090142361782"
+        },
+        {
+          "file": "apps/example-app-angular/src/assets/puzzle-game/title_level_score.svg",
+          "hash": "2734333809211502823"
+        },
+        {
+          "file": "apps/example-app-angular/src/assets/puzzle-game/white_particle.png",
+          "hash": "9513466671484615146"
+        },
+        {
+          "file": "apps/example-app-angular/src/assets/shapes.svg",
+          "hash": "4708889011185296100"
+        },
+        {
+          "file": "apps/example-app-angular/src/assets/swords/cheap_sword.png",
+          "hash": "10789230948872126719"
+        },
+        {
+          "file": "apps/example-app-angular/src/assets/swords/fancy_sword.png",
+          "hash": "14474393231318689420"
+        },
+        {
+          "file": "apps/example-app-angular/src/environments/environment.prod.ts",
+          "hash": "13704300067714237052"
+        },
+        {
+          "file": "apps/example-app-angular/src/environments/environment.ts",
+          "hash": "8760692723358491555"
+        },
+        {
+          "file": "apps/example-app-angular/src/global.scss",
+          "hash": "13926944913399804399"
+        },
+        {
+          "file": "apps/example-app-angular/src/index.html",
+          "hash": "9166601021194100871"
+        },
+        {
+          "file": "apps/example-app-angular/src/main.ts",
+          "hash": "4715187186890045294",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@angular/platform-browser-dynamic"
+          ]
+        },
+        {
+          "file": "apps/example-app-angular/src/polyfills.ts",
+          "hash": "12756956214241612976",
+          "deps": [
+            "npm:zone.js"
+          ]
+        },
+        {
+          "file": "apps/example-app-angular/src/test.ts",
+          "hash": "5350592218418628112",
+          "deps": [
+            "npm:zone.js",
+            "npm:@angular/core",
+            "npm:@angular/platform-browser-dynamic"
+          ]
+        },
+        {
+          "file": "apps/example-app-angular/src/theme/variables.scss",
+          "hash": "9215245183085033223"
+        },
+        {
+          "file": "apps/example-app-angular/src/zone-flags.ts",
+          "hash": "11770933155081423884"
+        },
+        {
+          "file": "apps/example-app-angular/tsconfig.app.json",
+          "hash": "7513797455520773769"
+        },
+        {
+          "file": "apps/example-app-angular/tsconfig.editor.json",
+          "hash": "5219024009160415359"
+        },
+        {
+          "file": "apps/example-app-angular/tsconfig.json",
+          "hash": "4367679365789318391"
+        },
+        {
+          "file": "apps/example-app-angular/tsconfig.spec.json",
+          "hash": "8168288629680592714"
+        }
+      ],
+      "example-app-angular-phaser-ui-modals": [
+        {
+          "file": "libs/example-app-angular/phaser/ui-modals/.eslintrc.json",
+          "hash": "12194638622676197698"
+        },
+        {
+          "file": "libs/example-app-angular/phaser/ui-modals/README.md",
+          "hash": "1435582450761509979"
+        },
+        {
+          "file": "libs/example-app-angular/phaser/ui-modals/jest.config.ts",
+          "hash": "2930496668517918288"
+        },
+        {
+          "file": "libs/example-app-angular/phaser/ui-modals/project.json",
+          "hash": "16222793167581048242"
+        },
+        {
+          "file": "libs/example-app-angular/phaser/ui-modals/src/index.ts",
+          "hash": "8103389830945768309"
+        },
+        {
+          "file": "libs/example-app-angular/phaser/ui-modals/src/lib/example-app-angular-phaser-ui-modals.module.ts",
+          "hash": "17605898107405452686",
+          "deps": [
+            "npm:@angular/common",
+            "npm:@angular/core"
+          ]
+        },
+        {
+          "file": "libs/example-app-angular/phaser/ui-modals/src/test-setup.ts",
+          "hash": "17711435995618823417",
+          "deps": [
+            "npm:jest-preset-angular"
+          ]
+        },
+        {
+          "file": "libs/example-app-angular/phaser/ui-modals/tsconfig.json",
+          "hash": "16884139635590206426"
+        },
+        {
+          "file": "libs/example-app-angular/phaser/ui-modals/tsconfig.lib.json",
+          "hash": "471547590338705994"
+        },
+        {
+          "file": "libs/example-app-angular/phaser/ui-modals/tsconfig.spec.json",
+          "hash": "5972991278933119899"
+        }
+      ],
+      "data-access-model": [
+        {
+          "file": "libs/shared/data-access-model/.eslintrc.json",
+          "hash": "15229340362955013836"
+        },
+        {
+          "file": "libs/shared/data-access-model/README.md",
+          "hash": "10960683525079556600"
+        },
+        {
+          "file": "libs/shared/data-access-model/jest.config.ts",
+          "hash": "15692162938289019675"
+        },
+        {
+          "file": "libs/shared/data-access-model/project.json",
+          "hash": "11174266505577719068"
+        },
+        {
+          "file": "libs/shared/data-access-model/src/index.ts",
+          "hash": "11229563326288168731"
+        },
+        {
+          "file": "libs/shared/data-access-model/src/lib/classes/blacksmith/blacksmith.class.ts",
+          "hash": "7990041641007584086",
+          "deps": [
+            "shared-phaser-singleton",
+            "npm:phaser"
+          ]
+        },
+        {
+          "file": "libs/shared/data-access-model/src/lib/classes/cheap_sword/cheap_sword.class.ts",
+          "hash": "9662156788249605490"
+        },
+        {
+          "file": "libs/shared/data-access-model/src/lib/classes/fancy_sword/fancy_sword.class.ts",
+          "hash": "10529256701577388717"
+        },
+        {
+          "file": "libs/shared/data-access-model/src/lib/classes/warrior/warrior.class.ts",
+          "hash": "2018029016001773485",
+          "deps": [
+            "shared-phaser-singleton"
+          ]
+        },
+        {
+          "file": "libs/shared/data-access-model/src/lib/classes/warrior/warrior.stats.class.ts",
+          "hash": "8220167151181057842"
+        },
+        {
+          "file": "libs/shared/data-access-model/src/lib/primordials/event/event.class.ts",
+          "hash": "11712394259413175205"
+        },
+        {
+          "file": "libs/shared/data-access-model/src/lib/primordials/human/human.primordial.class.ts",
+          "hash": "4266264313597110853"
+        },
+        {
+          "file": "libs/shared/data-access-model/src/lib/primordials/primordial.readme.md",
+          "hash": "1241772978158195690"
+        },
+        {
+          "file": "libs/shared/data-access-model/src/lib/primordials/stat/dependent-stat/dependent.stat.class.ts",
+          "hash": "14884233238752075128"
+        },
+        {
+          "file": "libs/shared/data-access-model/src/lib/primordials/stat/finalbonus/final-bonus.class.ts",
+          "hash": "15838146203074058378"
+        },
+        {
+          "file": "libs/shared/data-access-model/src/lib/primordials/stat/rawbonus/raw-bonus.class.ts",
+          "hash": "1413672177692380961"
+        },
+        {
+          "file": "libs/shared/data-access-model/src/lib/primordials/stat/stat.base.class.ts",
+          "hash": "6747138052002670"
+        },
+        {
+          "file": "libs/shared/data-access-model/src/lib/primordials/stat/stat.class.ts",
+          "hash": "7471424128875286141"
+        },
+        {
+          "file": "libs/shared/data-access-model/src/lib/primordials/sword/sword.enum.ts",
+          "hash": "15545882743012980512"
+        },
+        {
+          "file": "libs/shared/data-access-model/src/lib/primordials/sword/sword.primordial.class.ts",
+          "hash": "2156312778745106280"
+        },
+        {
+          "file": "libs/shared/data-access-model/src/lib/services/game-instance.service.ts",
+          "hash": "4510007488902104516",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@capacitor/motion",
+            "npm:@openforge/capacitor-game-services",
+            "shared-phaser-singleton",
+            "npm:phaser",
+            "npm:rxjs"
+          ]
+        },
+        {
+          "file": "libs/shared/data-access-model/src/lib/services/utils.service.ts",
+          "hash": "6648007892160164527",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@ionic/angular"
+          ]
+        },
+        {
+          "file": "libs/shared/data-access-model/src/lib/services/vibration.service.ts",
+          "hash": "4923736926248430008",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@capacitor/haptics"
+          ]
+        },
+        {
+          "file": "libs/shared/data-access-model/src/lib/stats/level/level.class.ts",
+          "hash": "17582627381097809710"
+        },
+        {
+          "file": "libs/shared/data-access-model/src/lib/stats/level/level.dependent.stat.ts",
+          "hash": "13658469033795398862"
+        },
+        {
+          "file": "libs/shared/data-access-model/src/lib/stats/salary/salary.class.ts",
+          "hash": "4386991697547193182"
+        },
+        {
+          "file": "libs/shared/data-access-model/src/lib/stats/stats.md",
+          "hash": "13778382188515826275"
+        },
+        {
+          "file": "libs/shared/data-access-model/src/test-setup.ts",
+          "hash": "17711435995618823417",
+          "deps": [
+            "npm:jest-preset-angular"
+          ]
+        },
+        {
+          "file": "libs/shared/data-access-model/tsconfig.json",
+          "hash": "11145648189952366061"
+        },
+        {
+          "file": "libs/shared/data-access-model/tsconfig.lib.json",
+          "hash": "3186111645535078553"
+        },
+        {
+          "file": "libs/shared/data-access-model/tsconfig.spec.json",
+          "hash": "10663979698535179693"
+        }
+      ],
+      "shared-phaser-singleton": [
+        {
+          "file": "libs/shared/phaser-singleton/.eslintrc.json",
+          "hash": "1039506957000974988"
+        },
+        {
+          "file": "libs/shared/phaser-singleton/README.md",
+          "hash": "719685064647143717"
+        },
+        {
+          "file": "libs/shared/phaser-singleton/jest.config.ts",
+          "hash": "5170128263295008424"
+        },
+        {
+          "file": "libs/shared/phaser-singleton/project.json",
+          "hash": "17717221483486172568"
+        },
+        {
+          "file": "libs/shared/phaser-singleton/src/index.ts",
+          "hash": "3710363490197201734"
+        },
+        {
+          "file": "libs/shared/phaser-singleton/src/lib/phaser-singleton.module.ts",
+          "hash": "5967056945481075802",
+          "deps": [
+            "npm:@angular/common",
+            "npm:@angular/core",
+            "data-access-model",
+            "npm:phaser",
+            "npm:rxjs"
+          ]
+        },
+        {
+          "file": "libs/shared/phaser-singleton/src/lib/scenes/world.scene.ts",
+          "hash": "7744631272025635359",
+          "deps": [
+            "npm:@capacitor/core",
+            "data-access-model",
+            "npm:phaser",
+            "npm:rxjs"
+          ]
+        },
+        {
+          "file": "libs/shared/phaser-singleton/src/lib/utilities/achievement.plugin.ts",
+          "hash": "4201841946835881271",
+          "deps": [
+            "npm:@openforge/capacitor-game-services",
+            "npm:phaser"
+          ]
+        },
+        {
+          "file": "libs/shared/phaser-singleton/src/lib/utilities/scroll-manager.ts",
+          "hash": "14220114503583811770",
+          "deps": [
+            "npm:phaser"
+          ]
+        },
+        {
+          "file": "libs/shared/phaser-singleton/src/test-setup.ts",
+          "hash": "17711435995618823417",
+          "deps": [
+            "npm:jest-preset-angular"
+          ]
+        },
+        {
+          "file": "libs/shared/phaser-singleton/tsconfig.json",
+          "hash": "11145648189952366061"
+        },
+        {
+          "file": "libs/shared/phaser-singleton/tsconfig.lib.json",
+          "hash": "11726335398310948842"
+        },
+        {
+          "file": "libs/shared/phaser-singleton/tsconfig.spec.json",
+          "hash": "13651284285843202557"
+        }
+      ],
+      "example-app-angular-e2e": [
+        {
+          "file": "apps/example-app-angular-e2e/.eslintrc.json",
+          "hash": "17108827281736971725"
+        },
+        {
+          "file": "apps/example-app-angular-e2e/cypress.json",
+          "hash": "7547894639696972264"
+        },
+        {
+          "file": "apps/example-app-angular-e2e/project.json",
+          "hash": "6518261440725692934"
+        },
+        {
+          "file": "apps/example-app-angular-e2e/src/fixtures/example.json",
+          "hash": "2484629326365720286"
+        },
+        {
+          "file": "apps/example-app-angular-e2e/src/integration/app.spec.ts",
+          "hash": "7578031244807105112"
+        },
+        {
+          "file": "apps/example-app-angular-e2e/src/support/app.po.ts",
+          "hash": "8980020431889886391"
+        },
+        {
+          "file": "apps/example-app-angular-e2e/src/support/commands.ts",
+          "hash": "3970339197779711601"
+        },
+        {
+          "file": "apps/example-app-angular-e2e/src/support/index.ts",
+          "hash": "3666078656922506009"
+        },
+        {
+          "file": "apps/example-app-angular-e2e/tsconfig.json",
+          "hash": "7335634979815443139"
+        }
+      ],
+      "example-app-angular-ionic-ui-modals": [
+        {
+          "file": "libs/example-app-angular/ionic/ui-modals/.eslintrc.json",
+          "hash": "12194638622676197698"
+        },
+        {
+          "file": "libs/example-app-angular/ionic/ui-modals/README.md",
+          "hash": "12003083562403491571"
+        },
+        {
+          "file": "libs/example-app-angular/ionic/ui-modals/jest.config.ts",
+          "hash": "14921456857415678010"
+        },
+        {
+          "file": "libs/example-app-angular/ionic/ui-modals/project.json",
+          "hash": "14559028358487812695"
+        },
+        {
+          "file": "libs/example-app-angular/ionic/ui-modals/src/index.ts",
+          "hash": "4759787352536859809"
+        },
+        {
+          "file": "libs/example-app-angular/ionic/ui-modals/src/lib/example-app-angular-ionic-ui-modals.module.ts",
+          "hash": "12307516475595279002",
+          "deps": [
+            "npm:@angular/common",
+            "npm:@angular/core"
+          ]
+        },
+        {
+          "file": "libs/example-app-angular/ionic/ui-modals/src/test-setup.ts",
+          "hash": "17711435995618823417",
+          "deps": [
+            "npm:jest-preset-angular"
+          ]
+        },
+        {
+          "file": "libs/example-app-angular/ionic/ui-modals/tsconfig.json",
+          "hash": "16884139635590206426"
+        },
+        {
+          "file": "libs/example-app-angular/ionic/ui-modals/tsconfig.lib.json",
+          "hash": "471547590338705994"
+        },
+        {
+          "file": "libs/example-app-angular/ionic/ui-modals/tsconfig.spec.json",
+          "hash": "5972991278933119899"
+        }
+      ]
+    }
+  }
+}
